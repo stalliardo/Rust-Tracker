@@ -11,15 +11,25 @@ import { Outlet } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './components/navbar/Navbar';
 
+import { getPallete } from './theme/Theme'; // <- FIX
+import ThemeExamples from './theme/ThemeExamples';
+
 const App = () => {
   const mode = useSelector(state => state.theme.colorMode);
+
+  // const theme = useMemo(
+  //   () =>
+  //     createTheme({
+  //       palette: {
+  //         mode
+  //       }
+  //     }),
+  //   [mode],
+  // );
+
   const theme = useMemo(
     () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
+      createTheme(getPallete(mode)),
     [mode],
   );
 
@@ -50,7 +60,7 @@ const App = () => {
       <CssBaseline />
       <div className="App">
 
-        <Typography>This is a test</Typography>
+       <ThemeExamples />
         {
           user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
             <Outlet />

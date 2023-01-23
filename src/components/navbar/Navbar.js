@@ -124,9 +124,10 @@ const Navbar = (props) => {
             component="div"
             fontFamily="Russo One"
             letterSpacing="2px"
+            color="primary"
             sx={{ flexGrow: 0, display: "block" }}
           >
-            Rust name TBC
+            Rust Tracker
           </Typography>
 
           <Box sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1, ml: "30px", mt: "8px" }}>
