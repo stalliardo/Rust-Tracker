@@ -32,6 +32,11 @@ export const getPallete = (mode) => ({
                 //     primary: grey[900],
                 //     secondary: grey[800],
                 // },
+
+                loader: {
+                    main: '#ffffff',
+                },
+
             }
             : {
                 // TODO
@@ -52,6 +57,9 @@ export const getPallete = (mode) => ({
                 text: {
                     primary: '#fff',
                     secondary: grey[500],
+                },
+                loader: {
+                    main: '#000000',
                 },
             }),
     },
