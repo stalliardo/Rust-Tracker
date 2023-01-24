@@ -4,9 +4,9 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import { searchServers } from '../../services/API/serverAPIs';
 import LoadingButton from '../button/LoadingButton';
+
+import { searchServers } from '../../services/API/serverAPIs';
 
 const SearchContainer = () => {
     const [searchButtonDisabled, setSearchButtonDisabled] = useState(true);
