@@ -1,10 +1,5 @@
 import React from 'react';
 
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import DescriptionCard from '../cards/DescriptionCard';
 
@@ -13,7 +8,6 @@ const descriptions = [
     { title: "Statistics", text: "See how many new and returning players are joining, number of hours spent in game, and when." },
     { title: "Monitoring", text: "We automatically track all servers and provide advanced tools and metrics for players." },
 ]
-
 
 const DescriptionContainer = () => {
   return (
@@ -27,4 +21,4 @@ const DescriptionContainer = () => {
   )
 }
 
-export default DescriptionContainer
+export default DescriptionContainer;
