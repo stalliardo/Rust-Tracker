@@ -6,18 +6,24 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { searchServers } from '../../services/API/serverAPIs';
+import LoadingButton from '../button/LoadingButton';
 
 const SearchContainer = () => {
     const [searchButtonDisabled, setSearchButtonDisabled] = useState(true);
-    const [searchTerm, setSearchTerm] = useState(""); 
+    const [searchTerm, setSearchTerm] = useState("");
+    const [searchIsLoading, setSearchIsLoading] = useState(false);
 
     const onSubmit = (e) => {
         e.preventDefault();
+
+        setSearchIsLoading(true);
         
         searchServers(searchTerm).then((response) => {
             console.log("response = ", response.data);
         }).catch(e => {
             console.log("error getting server. Error: ", e);
+        }).finally(() => {
+            setSearchIsLoading(false);
         })
     }
 
@@ -34,7 +40,7 @@ const SearchContainer = () => {
             <form onSubmit={onSubmit}>
                 <Typography variant="subtitle1">Search Servers</Typography>
                 <TextField onChange={handleChange} fullWidth />
-                <Button variant="contained" type="submit" sx={{ mt: "10px" }} disabled={searchButtonDisabled}>Search</Button>
+                <LoadingButton type="submit" styles={{mt: "10px", width: "100px"}} text="Search" isLoading={searchIsLoading} disabled={searchButtonDisabled}/>
             </form>
         </Box>
     )
