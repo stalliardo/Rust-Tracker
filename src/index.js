@@ -9,6 +9,7 @@ import { BrowserRouter, Routes, Route, } from "react-router-dom";
 
 import Navbar from './components/navbar/Navbar';
 import Auth from './components/auth/Auth';
+import PageNotFound from './components/errors/PageNotFound';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -16,6 +17,7 @@ root.render(
   <Provider store={store}>
       <BrowserRouter>
         <Routes>
+          <Route path="*" element={<PageNotFound />}/>
           <Route path="/" element={<App />}>
             {/* <Route index element={<App />} /> */}
             <Route path="/auth" element={<Auth />} />
