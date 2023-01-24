@@ -41,6 +41,10 @@ const Navbar = (props) => {
         formattedLink = "auth"
         break;
       }
+      case "Sign Out" : {
+        formattedLink = "auth"
+        break;
+      }
 
       default: formattedLink = navItem;
     }
@@ -61,7 +65,6 @@ const Navbar = (props) => {
   }
 
   const handleLogoClicked = () => {
-    console.log("logo clicked");
     navigate("/");
   }
 
