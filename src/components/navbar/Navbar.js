@@ -10,6 +10,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
 
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { toggleColorMode } from '../../features/theme/themeSlice';
+
 const navItemsMobile = ['Home', 'Members', 'Plot Data', 'About', 'Contact', 'Profile', 'Settings', 'Sign Out'];
 const navItemsDesktop = ['Home', 'Members', 'Plot Data', 'About', 'Contact'];
 const settings = ['Profile', 'Settings', 'Sign Out'];
@@ -19,13 +25,17 @@ const Navbar = (props) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const [anchorElNotiification, setAnchorElNotification] = useState(null);
 
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const userDoc = useSelector((state) => state.user.currentUser);
 
- 
+  const theme = useTheme();
+  const colorMode = useSelector((state) => state.theme.colorMode);
+
+  const toggleTheme = () => {
+    dispatch(toggleColorMode())
+  }
 
   const extractInitials = (name) => {
     const names = name.split(" ");
@@ -50,9 +60,6 @@ const Navbar = (props) => {
     setAnchorElUser(event.currentTarget);
   };
 
-
-
-
   const handleNavItemClicked = (link) => {
     if (link === "Sign Out") {
       dispatch(logOut());
@@ -67,8 +74,6 @@ const Navbar = (props) => {
       navigate(link);
     }
   };
-
-
 
   // const drawer = (
   //   <Box onClick={handleDrawerToggle} sx={{ pt: "20px", background: "linear-gradient(131deg, rgba(1,179,217,1) 0%, rgba(3,2,74,1) 100%)", height: "100vh" }}>
@@ -97,7 +102,7 @@ const Navbar = (props) => {
 
   return (
     <Box sx={{ display: 'flex' }}>
-      
+
       <AppBar component="nav" position='static'>
         <Toolbar>
           {/* {userDoc ? <IconButton
@@ -110,14 +115,19 @@ const Navbar = (props) => {
             <MenuIcon />
           </IconButton> 
           : null} */}
+
+          <IconButton onClick={toggleTheme}>
+            {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
           <Typography
             variant="h6"
             component="div"
             fontFamily="Russo One"
             letterSpacing="2px"
+            color="primary"
             sx={{ flexGrow: 0, display: "block" }}
           >
-            Rust name TBC
+            Rust Tracker
           </Typography>
 
           <Box sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1, ml: "30px", mt: "8px" }}>
@@ -129,7 +139,7 @@ const Navbar = (props) => {
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: "block" }, flexGrow: 0 }}>
-           
+
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {userDoc ? <Avatar sx={{ bgcolor: "primary.main", height: "50px", width: "50px", letterSpacing: "2px" }}>{extractInitials(userDoc.name)}</Avatar> : null}
@@ -157,7 +167,7 @@ const Navbar = (props) => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu> 
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>
