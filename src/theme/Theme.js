@@ -33,6 +33,15 @@ export const getPallete = (mode) => ({
                 //     secondary: grey[800],
                 // },
 
+                background: {
+                    default: "fff",
+                    // TODO
+                    secondary: "#d9d9d9",
+                  
+                    // paper: "#242424" // default_light
+
+                },
+
                 loader: {
                     main: '#ffffff',
                 },
@@ -46,11 +55,9 @@ export const getPallete = (mode) => ({
                 background: {
                     // default: deepOrange[900],
                     // TODO
-                    // paper: "#291b00" // Orange tinge
-                    // paper: "#050029" // blue tinge
-                    // paper: "#290000" // red tinge
+                    secondary: "#242424",
+                  
                     paper: "#242424" // default_light
-                    // paper: "#121212" // default
 
                 },
 

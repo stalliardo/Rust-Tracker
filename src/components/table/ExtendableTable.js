@@ -14,13 +14,13 @@ import EditIcon from '@mui/icons-material/Edit';
 
 const allowRowToRender = (key, disallowedKeys) => {
   let canRender = true;
-  if(disallowedKeys?.length) {
+  if (disallowedKeys?.length) {
     disallowedKeys.forEach((k) => {
-      if(key === k) canRender = false;
+      if (key === k) canRender = false;
     })
   }
 
-  if(key === "id") canRender = false;
+  if (key === "id") canRender = false;
 
   return canRender;
 }
@@ -36,7 +36,13 @@ const ExtendableTable = (props) => {
 
   return (
     <TableContainer component={Paper} elevation={8}>
-      <Table sx={{ minWidth: 650, "td, th": {color: "black", fontWeight: "bold", letterSpacing: "1px"} }} aria-label="simple table">
+      <Table sx={{
+        minWidth: 650,
+        "td": { color: "", fontWeight: "bold", letterSpacing: "1px" },
+        "th": { backgroundColor: "background.default", color: "primary.main" },
+        "tr:not(:has(th)):hover": { cursor: "pointer", backgroundColor: "background.secondary" }
+
+      }} aria-label="simple table">
         <TableHead sx={{ backgroundColor: "lightgrey" }}>
           <TableRow>
             {props.data.head.map((item, index) => (
@@ -52,7 +58,7 @@ const ExtendableTable = (props) => {
             >
               {Object.keys(row).map((r, inx) => {
                 return (
-                 allowRowToRender(r, props.disallowedKeys) ? <TableCell key={inx + "41"}>{row[r]}</TableCell> : null
+                  allowRowToRender(r, props.disallowedKeys) ? <TableCell key={inx + "41"}>{row[r]}</TableCell> : null
                 )
               })}
 
