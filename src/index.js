@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route, } from "react-router-dom";
 import Navbar from './components/navbar/Navbar';
 import Auth from './components/auth/Auth';
 import PageNotFound from './components/errors/PageNotFound';
+import Index from './routes/Index';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -18,8 +19,8 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
+            <Route index element={<Index />} />
             <Route path="*" element={<PageNotFound />}/>
-            {/* <Route index element={<App />} /> */}
             <Route path="/auth" element={<Auth />} />
           </Route>
         </Routes>
