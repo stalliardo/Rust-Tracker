@@ -7,7 +7,6 @@ export const userSlice = createSlice({
         currentUser: null,
         isLoading: false,
         isLoadingUserData: true,
-        invitations: [],
     },
     reducers: {
         setUser: (state, action) => {
@@ -21,10 +20,6 @@ export const userSlice = createSlice({
         setGangId: (state, action) => {
             state.currentUser = {...state.currentUser, gangId: action.payload}
         },
-
-        filterInvitations: (state, action) => {
-            state.invitations = state.invitations.filter(invite => invite.id !== action.payload);
-        }
     },
     extraReducers: (builder) => {
         builder.addCase(signUpUser.pending, (state) => {
@@ -60,18 +55,10 @@ export const userSlice = createSlice({
         builder.addCase(logOut.fulfilled, (state) => {
             state.currentUser = null;
         });
-
-        builder.addCase(getInvitations.fulfilled, (state, action) => {
-            state.invitations = action.payload;
-        });
-
-        builder.addCase(acceptInvitation.fulfilled, (state, action) => {
-            state.invitations = state.invitations.filter(invite => invite.id !== action.payload);
-        });
     }
 })
 
-export const { setUser, noUserFound, setGangId, filterInvitations } = userSlice.actions;
+export const { setUser, noUserFound } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
@@ -123,31 +110,6 @@ export const logOut = createAsyncThunk(
             await logUserOut();
         } catch (error) {
             throw (error);
-        }
-    }
-)
-
-export const getInvitations = createAsyncThunk(
-    "user/getInvitations",
-    async (id) => {
-        try {
-            const result = await checkInvitations(id);
-            return result;
-        } catch (error) {
-            throw error;
-        }
-    }
-)
-
-
-export const acceptInvitation = createAsyncThunk(
-    "user/acceptInvitation",
-    async (data) => {
-        try {
-            await acceptInvite(data);
-            return data.inviteId;
-        } catch (error) {
-            throw error;
         }
     }
 )
