@@ -58,12 +58,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Navbar />
       <CssBaseline />
-      <div className="App">
-        {
-          user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
-            <Outlet />
-        }
-      </div>
+      <Container>
+        <div className="App">
+          {
+            user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
+              <Outlet />
+          }
+        </div>
+      </Container>
     </ThemeProvider>
   );
 }

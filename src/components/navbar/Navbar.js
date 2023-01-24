@@ -70,7 +70,7 @@ const Navbar = (props) => {
 
   return (
     <Box component={Paper}>
-      <Container maxWidth="lg">
+      <Container maxWidth="lg" disableGutters>
         <Toolbar>
           <Box sx={{ flexGrow: 1, display: "flex", height: "70px" }} >
             <Box sx={{ display: "flex", alignItems: "center", ":hover": { cursor: "pointer" } }} onClick={handleLogoClicked}>
