@@ -21,8 +21,10 @@ export const theme = createTheme({
 export const getPallete = (mode) => ({
     palette: {
         mode,
+
         ...(mode === 'light'
             ? {
+                // TODO
                 // palette values for light mode
                 // primary: amber,
                 // divider: amber[200],
@@ -32,22 +34,42 @@ export const getPallete = (mode) => ({
                 // },
             }
             : {
+                // TODO
                 // palette values for dark mode
                 primary: deepOrange,
                 // divider: deepOrange[700],
                 background: {
                     // default: deepOrange[900],
-                    // paper: deepOrange[900],
-                    
+                    // TODO
+                    // paper: "#291b00" // Orange tinge
+                    // paper: "#050029" // blue tinge
+                    // paper: "#290000" // red tinge
+                    paper: "#242424" // default_light
+                    // paper: "#121212" // default
+
                 },
 
                 text: {
                     primary: '#fff',
                     secondary: grey[500],
-                    // brandLight: deepOrange[100],
-                    // brandPrimary: deepOrange[500],
-                    // brandDark: deepOrange[900],
                 },
             }),
     },
+    typography: {
+        // fontSize: 20, // Global size
+        h6: {
+            fontFamily: "Russo One",
+            // fontSize: 10 // Specific size
+        },
+
+        // ...(mode === "light") && {
+        //     button: {
+        //         color: "black"
+        //     }
+        // },
+        // TODO - button text is not visible in light mode
+        button: {
+            // fontFamily: "Russo One",
+        }
+      },
 })

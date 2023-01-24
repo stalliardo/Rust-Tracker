@@ -17,8 +17,10 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { toggleColorMode } from '../../features/theme/themeSlice';
 
+import rustLogo from '../../images/rustLogo.png';
+
 const navItemsMobile = ['Home', 'Members', 'Plot Data', 'About', 'Contact', 'Profile', 'Settings', 'Sign Out'];
-const navItemsDesktop = ['Home', 'Members', 'Plot Data', 'About', 'Contact'];
+const desktopNavItems = ['Home', 'Members', 'Plot Data', 'About', 'Contact'];
 const settings = ['Profile', 'Settings', 'Sign Out'];
 
 const Navbar = (props) => {
@@ -102,9 +104,9 @@ const Navbar = (props) => {
   // );
 
   return (
-    <Box component={Paper} sx={{ display: 'flex', }}>
+    <Box component={Paper}>
 
-      <Container>
+      <Container maxWidth="lg">
         <Toolbar>
           {/* {userDoc ? <IconButton
             color="inherit"
@@ -117,37 +119,40 @@ const Navbar = (props) => {
           </IconButton> 
           : null} */}
 
-          <IconButton onClick={toggleTheme}>
-            {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            fontFamily="Russo One"
-            letterSpacing="2px"
-            color="primary"
-            sx={{ flexGrow: 0, display: "block" }}
-          >
-            Rust Tracker
-          </Typography>
+          <Box sx={{ flexGrow: 1, display: "flex", alignItems: "center", height: "70px"}}>
+            <img src={rustLogo} height={50} alt="rust icon" />
+            <Typography
+              variant="h6"
+              component="div"
+              // fontFamily="Russo One"
+              letterSpacing="2px"
+              color="primary"
+              sx={{ flexGrow: 0, display: "block", ml: "20px" }}
+            >
+              Rust Tracker
+            </Typography>
+          </Box>
 
-          <Box sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1, ml: "30px", mt: "8px" }}>
-            {userDoc ? navItemsDesktop.map((item) => (
-              <Button key={item} sx={{ color: "white", fontSize: "12px" }} onClick={() => handleNavItemClicked(item)}>
-                {item}
-              </Button>
-            )) : null}
+
+          <Box sx={{ display: { xs: 'none', md: 'block' }, mt: "8px" }}>
+            {
+              desktopNavItems.map((item) => (
+                // TODO Change buttons to either link button or just clickable link
+                <Button key={item} sx={{ color: "white", fontSize: "12px" }} onClick={() => handleNavItemClicked(item)}>
+                  {item}
+                </Button>
+                // <Button variant='contained' sx={{backgroundColor: "primary"}}>Hweloo</Button>
+              ))
+            }
           </Box>
 
           <Box sx={{ display: { xs: 'none', md: "block" }, flexGrow: 0 }}>
 
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {userDoc ? <Avatar sx={{ bgcolor: "primary.main", height: "50px", width: "50px", letterSpacing: "2px" }}>{extractInitials(userDoc.name)}</Avatar> : null}
-              </IconButton>
-            </Tooltip>
+            <IconButton onClick={toggleTheme}>
+              {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
 
-            <Menu
+            {/* <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -168,7 +173,7 @@ const Navbar = (props) => {
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
-            </Menu>
+            </Menu> */}
           </Box>
         </Toolbar>
       </Container>
