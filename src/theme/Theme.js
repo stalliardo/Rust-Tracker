@@ -57,10 +57,13 @@ export const getPallete = (mode) => ({
     },
     typography: {
         // fontSize: 20, // Global size
-        h6: {
-            fontFamily: "Russo One",
-            // fontSize: 10 // Specific size
-        },
+        // fontFamily: "Russo One",
+        h1: { fontFamily: "Russo One" },
+        h2: { fontFamily: "Russo One" },
+        h3: { fontFamily: "Russo One" },
+        h4: { fontFamily: "Russo One" },
+        h5: { fontFamily: "Russo One" },
+        h6: { fontFamily: "Russo One" },
 
         // ...(mode === "light") && {
         //     button: {
@@ -71,5 +74,5 @@ export const getPallete = (mode) => ({
         button: {
             // fontFamily: "Russo One",
         }
-      },
+    },
 })
