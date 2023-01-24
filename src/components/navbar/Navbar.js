@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { logOut } from '../../features/user/userSlice';
 
-import { Avatar, Menu, MenuItem, Tooltip, AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemText, ListItemButton, Toolbar, Typography, Button } from '@mui/material';
+import { Avatar, Menu, MenuItem, Tooltip, AppBar, Box, Divider, Drawer, Container, Paper, IconButton, List, ListItem, ListItemText, ListItemButton, Toolbar, Typography, Button } from '@mui/material';
+
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import Badge from '@mui/material/Badge';
@@ -101,9 +102,9 @@ const Navbar = (props) => {
   // );
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box component={Paper} sx={{ display: 'flex', }}>
 
-      <AppBar component="nav" position='static'>
+      <Container>
         <Toolbar>
           {/* {userDoc ? <IconButton
             color="inherit"
@@ -170,7 +171,7 @@ const Navbar = (props) => {
             </Menu>
           </Box>
         </Toolbar>
-      </AppBar>
+      </Container>
     </Box>
   )
 }
