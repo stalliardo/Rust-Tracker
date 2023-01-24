@@ -1,4 +1,5 @@
 import React from 'react'
+import DescriptionContainer from '../components/index/DescriptionContainer'
 import SearchContainer from '../components/index/SearchContainer'
 import WelcomeDisplay from '../components/index/WelcomeDisplay'
 
@@ -8,6 +9,7 @@ const Index = () => {
     <div>
       <WelcomeDisplay />
       <SearchContainer />
+      <DescriptionContainer />
     </div>
   )
 }
