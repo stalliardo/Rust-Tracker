@@ -1,12 +1,37 @@
 import './App.css';
 
-import { CircularProgress, Container } from '@mui/material';
-import { useEffect } from 'react';
+import { useMemo, useState } from 'react';
+
+import { CircularProgress, Container, Typography } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
-function App() {
+import CssBaseline from '@mui/material/CssBaseline';
+import Navbar from './components/navbar/Navbar';
+
+import { getPallete } from './theme/Theme';
+import ThemeExamples from './theme/ThemeExamples';
+
+const App = () => {
+  const mode = useSelector(state => state.theme.colorMode);
+
+  // const theme = useMemo(
+  //   () =>
+  //     createTheme({
+  //       palette: {
+  //         mode
+  //       }
+  //     }),
+  //   [mode],
+  // );
+
+  const theme = useMemo(
+    () =>
+      createTheme(getPallete(mode)),
+    [mode],
+  );
 
   // const userDoc = useSelector((state) => state.user);
   const user = {
@@ -30,16 +55,19 @@ function App() {
   // }, [userDoc])
 
   return (
-    <div className="App">
-      {
-        user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
-          <Outlet />
-      }
-      {/* <div className='footer'>
-        <Footer />
-      </div> */}
-    </div>
+    <ThemeProvider theme={theme}>
+      <Navbar />
+      <CssBaseline />
+      <div className="App">
+        {
+          user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
+            <Outlet />
+        }
+      </div>
+    </ThemeProvider>
   );
 }
 
 export default App;
+
+// TODO - active links should be orange
