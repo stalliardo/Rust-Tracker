@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 import { logOut } from '../../features/user/userSlice';
 
@@ -27,19 +28,36 @@ const Navbar = (props) => {
     dispatch(toggleColorMode())
   }
 
-  const handleNavItemClicked = (link) => {
-    if (link === "Sign Out") {
-      dispatch(logOut());
-      navigate("/");
-    } else if (link === "Sign In") {
-      navigate("auth");
-    } else navigate(link);
-  };
-
   const filterAuthenticatedNavItems = (navItem) => {
+    const activeLinkStyle = {
+      textDecoration: "none",
+      color: "#de4300"
+    }
+
+    let formattedLink = "";
+
+    switch(navItem) {
+      case "Sign In" : {
+        formattedLink = "auth"
+        break;
+      }
+
+      default: formattedLink = navItem;
+    }
+
     if (user && navItem === "Sign In") return null;
     if (!user && navItem === "Sign Out") return null;
-    return <Button key={navItem} sx={{ color: "white", fontSize: "12px" }} onClick={() => handleNavItemClicked(navItem)}>{navItem}</Button>
+    return (
+      <NavLink
+        key={navItem}
+        to={formattedLink}
+        style={({ isActive }) =>
+          isActive ? activeLinkStyle : undefined
+        }
+      >
+        {navItem}
+      </NavLink>
+    )
   }
 
   const handleLogoClicked = () => {
