@@ -11,7 +11,7 @@ import { Outlet } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Navbar from './components/navbar/Navbar';
 
-import { getPallete } from './theme/Theme'; // <- FIX
+import { getPallete } from './theme/Theme';
 import ThemeExamples from './theme/ThemeExamples';
 
 const App = () => {
@@ -59,8 +59,6 @@ const App = () => {
       <Navbar />
       <CssBaseline />
       <div className="App">
-
-       <ThemeExamples />
         {
           user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
             <Outlet />
@@ -71,3 +69,5 @@ const App = () => {
 }
 
 export default App;
+
+// TODO - active links should be orange
