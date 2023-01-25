@@ -40,6 +40,9 @@ const App = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
 
+  console.log('Theme = ', theme);
+  
+
   // useEffect(() => {
   //   onAuthStateChanged(auth, (user) => {
   //     if (user) {
