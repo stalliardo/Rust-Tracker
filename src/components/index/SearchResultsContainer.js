@@ -3,23 +3,14 @@ import { Box, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import ExtendableTable from '../table/ExtendableTable';
 
-const tableData = {
-    head: ["Rank", "Name", "Players", "Address", "Location"],
-    rows: [
-        { id: "testid1", rank: "300", name: "Tataris solo duo trio", players: "190/300", address: "192.168.0.1:2209", location: "UK"},
-        { id: "testid2", rank: "500", name: "Tataris solo duo trio", players: "19/300", address: "192.168.0.1:2209", location: "UK"},
-        { id: "testid3", rank: "320", name: "Tataris solo duo trio", players: "132/300", address: "192.168.0.1:2209", location: "UK"},
-    ]
-}
-
 const SearchResultsContainer = ({ searchResults }) => {
-    const [tableData, setTableData] = useState({head: ["Rank", "Name", "Players", "Address", "Location"], rows: []}); // TODO -> make this a custom hook as this is performed often
+    const formattedData = [];
+    const [tableData, setTableData] = useState({head: ["Rank", "Name", "Players", "Address", "Location"], rows: []});
+
     const handleRowClicked = (row) => {
         // TODO
         console.log("Row clicked from parent. Row data = ", row);
     }
-
-    const formattedData = [];
 
     useEffect(() => {
 
