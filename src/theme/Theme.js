@@ -32,6 +32,20 @@ export const getPallete = (mode) => ({
                 //     primary: grey[900],
                 //     secondary: grey[800],
                 // },
+
+                background: {
+                    default: "fff",
+                    // TODO
+                    secondary: "#d9d9d9",
+                  
+                    // paper: "#242424" // default_light
+
+                },
+
+                loader: {
+                    main: '#ffffff',
+                },
+
             }
             : {
                 // TODO
@@ -41,11 +55,9 @@ export const getPallete = (mode) => ({
                 background: {
                     // default: deepOrange[900],
                     // TODO
-                    // paper: "#291b00" // Orange tinge
-                    // paper: "#050029" // blue tinge
-                    // paper: "#290000" // red tinge
+                    secondary: "#242424",
+                  
                     paper: "#242424" // default_light
-                    // paper: "#121212" // default
 
                 },
 
@@ -53,14 +65,20 @@ export const getPallete = (mode) => ({
                     primary: '#fff',
                     secondary: grey[500],
                 },
+                loader: {
+                    main: '#000000',
+                },
             }),
     },
     typography: {
         // fontSize: 20, // Global size
-        h6: {
-            fontFamily: "Russo One",
-            // fontSize: 10 // Specific size
-        },
+        // fontFamily: "Russo One",
+        h1: { fontFamily: "Russo One" },
+        h2: { fontFamily: "Russo One" },
+        h3: { fontFamily: "Russo One" },
+        h4: { fontFamily: "Russo One" },
+        h5: { fontFamily: "Russo One" },
+        h6: { fontFamily: "Russo One" },
 
         // ...(mode === "light") && {
         //     button: {
@@ -71,5 +89,5 @@ export const getPallete = (mode) => ({
         button: {
             // fontFamily: "Russo One",
         }
-      },
+    },
 })

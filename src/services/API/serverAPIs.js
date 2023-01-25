@@ -1,0 +1,14 @@
+import axios from "axios";
+
+const battlemetricsURL = "https://api.battlemetrics.com"; // TODO set this as the base url
+
+axios.defaults.baseURL = battlemetricsURL;
+
+// tataris id = 5967676
+export const getServerById = (serverId) => {
+    return axios.get(`/servers/${serverId}`);
+}
+
+export const searchServers = (searchTerm) => {
+    return axios.get(`/servers?filter[search]=${searchTerm}&page[size]=50`); // TODO Dynamic size and account type restricted
+}

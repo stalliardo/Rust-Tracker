@@ -40,6 +40,9 @@ const App = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
 
+  console.log('Theme = ', theme);
+  
+
   // useEffect(() => {
   //   onAuthStateChanged(auth, (user) => {
   //     if (user) {
@@ -58,12 +61,14 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Navbar />
       <CssBaseline />
-      <div className="App">
-        {
-          user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
-            <Outlet />
-        }
-      </div>
+      <Container>
+        <div className="App">
+          {
+            user.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress style={{ color: "blue" }} /></Container> :
+              <Outlet />
+          }
+        </div>
+      </Container>
     </ThemeProvider>
   );
 }
