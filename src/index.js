@@ -11,6 +11,7 @@ import Navbar from './components/navbar/Navbar';
 import Auth from './components/auth/Auth';
 import PageNotFound from './components/errors/PageNotFound';
 import Index from './routes/Index';
+import Server from './routes/Server';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -22,6 +23,10 @@ root.render(
             <Route index element={<Index />} />
             <Route path="*" element={<PageNotFound />}/>
             <Route path="/auth" element={<Auth />} />
+            <Route path="servers">
+              <Route index element={<PageNotFound />}/>
+              <Route path=":serverId" element={<Server />}/>
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>
