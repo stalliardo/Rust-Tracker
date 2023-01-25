@@ -47,7 +47,7 @@ const SearchContainer = () => {
             </form>
 
             {
-                initiatedSearch && <SearchResultsContainer searchResults={searchResults} />
+                initiatedSearch && !searchIsLoading ? <SearchResultsContainer searchResults={searchResults} /> : null
             }
 
         </Box>
