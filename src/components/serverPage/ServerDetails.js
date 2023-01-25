@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 
-import { Typography, Box, Grid, Paper, Link } from '@mui/material';
+import { Typography, Box, Paper, Link } from '@mui/material';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
 const ServerDetails = ({ data }) => {
     const [rows, setRows] = useState([]);
+
+    const formatRowELements = (row) => {
+        if (row.item === "Website") {
+            return <Link href={row.value}>{row.value}</Link>
+        } else if (row.item === "Status") {
+            return <Box component="span" sx={{ color: row.value === "online" ? "lightgreen" : "red" }}>{row.value}</Box>
+        } else {
+            return row.value;
+        }
+    }
 
     useEffect(() => {
         const formattedRows = [
@@ -28,7 +37,6 @@ const ServerDetails = ({ data }) => {
         setRows(formattedRows);
     }, [data]);
 
-
     return (
         <Box >
             <TableContainer component={Paper}>
@@ -44,7 +52,7 @@ const ServerDetails = ({ data }) => {
                                 </TableCell>
                                 <TableCell align="right">
                                     {
-                                        row.item === "Website" ? <Link href={row.value}>{row.value}</Link> : row.value
+                                        formatRowELements(row)
                                     }
                                 </TableCell>
 
@@ -55,7 +63,7 @@ const ServerDetails = ({ data }) => {
             </TableContainer>
         </Box>
     )
-}
+};
 
-export default ServerDetails
+export default ServerDetails;
 

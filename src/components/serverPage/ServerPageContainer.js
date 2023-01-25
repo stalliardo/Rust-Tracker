@@ -7,12 +7,11 @@ const ServerPageContainer = ({ serverData }) => {
     return (
         <Box component={Paper} sx={{ textAlign: "left", padding: "20px" }}>
             <Typography variant="h4" textAlign="center">{serverData.attributes.name}</Typography>
-            <Grid container>
-                <Grid item sx={{ border: "1px solid red" }} xs={12} md={8}>
+            <Grid container mt="20px">
+                <Grid item sx={{ border: "1px solid red" }} xs={12} md={6}>
                     <ServerDetails data={serverData} />
-
                 </Grid>
-                <Grid item sx={{ border: "1px solid red" }} xs={12} md={4}>
+                <Grid item sx={{ border: "1px solid red" }} xs={12} md={6}>
                     <Typography variant="h6" color="primary" textAlign="center">Authed user perks</Typography>
 
                 </Grid>
