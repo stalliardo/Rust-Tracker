@@ -1,6 +1,7 @@
 import { Container, Box, Paper, Typography, Grid, Link } from '@mui/material';
 import useTheme from '@mui/material/styles/useTheme';
 import React from 'react'
+import PlayersContainer from './PlayersContainer';
 import ServerActions from './ServerActions';
 import ServerDetails from './ServerDetails';
 
@@ -16,7 +17,7 @@ const ServerPageContainer = ({ serverData }) => {
                 <Grid item xs={12} md={6} padding="0px 20px">
                     <ServerActions data={serverData} />
 
-                    {/* TODO Add the server players container here */}
+                    <PlayersContainer />
                 </Grid>
             </Grid>
         </Box>
