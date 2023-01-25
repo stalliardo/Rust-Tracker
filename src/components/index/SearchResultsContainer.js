@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { PaginationContainer } from '../pagination/PaginationContainer';
 import ExtendableTable from '../table/ExtendableTable';
 
@@ -10,9 +11,10 @@ const SearchResultsContainer = ({ searchResults }) => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
+    const navigate = useNavigate();
+
     const handleRowClicked = (row) => {
-        // TODO
-        console.log("Row clicked from parent. Row data = ", row);
+        navigate(`/servers/${row.id}`);
     }
 
     const onPageChaned = (event, newPage) => {
@@ -25,9 +27,11 @@ const SearchResultsContainer = ({ searchResults }) => {
     
     useEffect(() => {
         const filteredResults = searchResults.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+        console.log("filtered results = ", filteredResults);
         
         filteredResults.forEach((result) => {
             formattedData.push({
+                id: result.id,
                 rank: result.attributes.rank,
                 name: result.attributes.name,
                 players: `${result.attributes.players}/${result.attributes.maxPlayers}`,
