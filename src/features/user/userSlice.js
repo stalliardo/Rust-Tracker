@@ -58,7 +58,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, noUserFound, setGangId, filterInvitations } = userSlice.actions;
+export const { setUser, noUserFound } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
