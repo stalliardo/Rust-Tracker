@@ -15,6 +15,8 @@ const ServerPageContainer = ({ serverData }) => {
                 </Grid>
                 <Grid item xs={12} md={6} padding="0px 20px">
                     <ServerActions data={serverData} />
+
+                    {/* TODO Add the server players container here */}
                 </Grid>
             </Grid>
         </Box>
