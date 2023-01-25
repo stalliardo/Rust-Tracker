@@ -10,6 +10,8 @@ const RegisteredUserActions = () => {
                 <Button variant="contained" sx={{ width: "40%" }}>Create Alerts</Button>
             </Box>
             <TextField fullWidth label="Add Note" sx={{mt: "30px"}}/>
+            <Button variant="contained" sx={{ width: "40%", mt: "20px" }}>Save Note</Button>
+
         </Box>
     )
 }
