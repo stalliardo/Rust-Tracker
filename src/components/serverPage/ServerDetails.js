@@ -24,7 +24,7 @@ const ServerDetails = ({ data }) => {
     useEffect(() => {
         const formattedRows = [
             { item: "Rank", value: data.attributes.rank },
-            { item: "Player Count", value: data.attributes.players },
+            { item: "Player Count", value: `${data.attributes.players}/${data.attributes.maxPlayers}` },
             { item: "Address", value: data.attributes.adderess || `${data.attributes.ip}:${data.attributes.port}` },
             { item: "Status", value: data.attributes.status },
             // { item: "Distance", value:  }, TODO or not?
