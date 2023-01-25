@@ -34,6 +34,10 @@ const ExtendableTable = (props) => {
     props.handleDelete(row);
   }
 
+  const handleRowClick = (row) => {
+    props.handleRowClicked(row);
+  }
+
   return (
     <TableContainer component={Paper} elevation={8}>
       <Table sx={{
@@ -55,6 +59,7 @@ const ExtendableTable = (props) => {
             <TableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+              onClick={() => handleRowClick(row)}
             >
               {Object.keys(row).map((r, inx) => {
                 return (

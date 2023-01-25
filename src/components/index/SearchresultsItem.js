@@ -43,3 +43,5 @@ export default SearchresultsItem;
     // 4 - players count
     // 5 - Address -> can i implement a connect option via this?
     // 6 - Location ie UK 76km
+
+    // TODO remove this file

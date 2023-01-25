@@ -16,10 +16,14 @@ const SearchResultsContainer = ({ searchResults }) => {
 
     console.log("searchResults = ", searchResults);
 
+    const handleRowClicked = (row) => {
+        console.log("Row clicked from parent. Row data = ", row);
+    }
+
     return (
         <Box sx={{ mt: "30px" }}>
             <Typography variant="h5" color="primary">Results:</Typography>
-            <ExtendableTable data={tableData}/>
+            <ExtendableTable data={tableData} handleRowClicked={handleRowClicked}/>
         </Box>
     )
 }
