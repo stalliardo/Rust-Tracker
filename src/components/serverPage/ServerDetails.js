@@ -39,7 +39,7 @@ const ServerDetails = ({ data }) => {
 
     return (
         <Box >
-            <TableContainer component={Paper}>
+            <TableContainer >
                 <Table sx={{ minWidth: 280 }} aria-label="simple table">
                     <TableBody>
                         {rows.map((row) => (
@@ -61,6 +61,8 @@ const ServerDetails = ({ data }) => {
                     </TableBody>
                 </Table>
             </TableContainer>
+            <Typography variant='body1' mt="0px" ml="14px" fontWeight="bold">Server Detials:</Typography>
+            <Typography variant='subtitle1' mt="0px" ml="14px">{data.attributes.details.rust_description}</Typography>
         </Box>
     )
 };
