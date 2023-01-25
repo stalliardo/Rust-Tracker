@@ -15,13 +15,12 @@ const SearchContainer = () => {
     const [searchIsLoading, setSearchIsLoading] = useState(false);
     const [searchResults, setSearchResults] = useState([]);
     const [initiatedSearch, setInitiatedSearch] = useState(false);
-    
+
     const onSubmit = (e) => {
         e.preventDefault();
-
         setSearchIsLoading(true);
         setInitiatedSearch(true);
-        
+
         searchServers(searchTerm).then((response) => {
             setSearchResults(response.data.data);
         }).catch(e => {
@@ -44,15 +43,15 @@ const SearchContainer = () => {
             <form onSubmit={onSubmit}>
                 <Typography variant="subtitle1">Search Servers</Typography>
                 <TextField onChange={handleChange} fullWidth />
-                <LoadingButton type="submit" styles={{mt: "10px", width: "100px"}} text="Search" isLoading={searchIsLoading} disabled={searchButtonDisabled}/>
+                <LoadingButton type="submit" styles={{ mt: "10px", width: "100px" }} text="Search" isLoading={searchIsLoading} disabled={searchButtonDisabled} />
             </form>
 
             {
-                initiatedSearch && <SearchResultsContainer searchResults={searchResults}/>
+                initiatedSearch && <SearchResultsContainer searchResults={searchResults} />
             }
-            
+
         </Box>
     )
 }
 
-export default SearchContainer
+export default SearchContainer;

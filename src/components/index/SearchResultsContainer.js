@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ExtendableTable from '../table/ExtendableTable';
 
 const tableData = {
@@ -13,52 +13,35 @@ const tableData = {
 }
 
 const SearchResultsContainer = ({ searchResults }) => {
-
-    console.log("searchResults = ", searchResults);
-
+    const [tableData, setTableData] = useState({head: ["Rank", "Name", "Players", "Address", "Location"], rows: []}); // TODO -> make this a custom hook as this is performed often
     const handleRowClicked = (row) => {
+        // TODO
         console.log("Row clicked from parent. Row data = ", row);
     }
 
+    const formattedData = [];
+
+    useEffect(() => {
+
+        searchResults.forEach((result) => {
+            formattedData.push({
+                rank: result.attributes.rank,
+                name: result.attributes.name,
+                players: `${result.attributes.players}/${result.attributes.maxPlayers}`,
+                address: result.attributes.address || `${result.attributes.ip}:${result.attributes.port}`,
+                location: result.attributes.country
+            });
+        });
+
+        setTableData({...tableData, rows: formattedData});
+    }, [searchResults]);
+
     return (
         <Box sx={{ mt: "30px" }}>
-            <Typography variant="h5" color="primary">Results:</Typography>
+            <Typography variant="h5" color="primary">Results: {searchResults.length}</Typography>
             <ExtendableTable data={tableData} handleRowClicked={handleRowClicked}/>
         </Box>
     )
 }
 
 export default SearchResultsContainer;
-
-// Display the searchResultItems here using map
-
-
-
-            {/* <Grid container sx={{ border: "1px solid red", display: "flex", justifyContent: "space-between" }}>
-                <Grid item md={2}>
-                    <Typography>Rank:</Typography>
-                </Grid>
-                <Grid item md={3}>
-                    <Typography>Name:</Typography>
-                </Grid>
-                <Grid item md={2}>
-                    <Typography>Players:</Typography>
-                </Grid>
-                <Grid item md={3}>
-                    <Typography>Address:</Typography>
-                </Grid>
-                <Grid item md={1}>
-                    <Typography>Location:</Typography>
-                </Grid>
-            </Grid> */}
-
-
-            
-            // {
-            //     searchResults.length ? searchResults.map((item) => {
-            //         return (
-            //             <SearchresultsItem key={item.id} />
-            //         )
-            //     })
-            //         : <Typography>No servers were found!</Typography>
-            // }
