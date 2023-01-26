@@ -16,10 +16,9 @@ const ServerPageContainer = ({ serverData }) => {
                 </Grid>
                 <Grid item xs={12} md={6} padding="0px 20px">
                     <ServerActions data={serverData} />
-                    {/* TODO the players container will go below the details and actions */}
-                    {/* <PlayersContainer /> */}
                 </Grid>
             </Grid>
+            <PlayersContainer />
         </Box>
     )
 }
