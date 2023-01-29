@@ -6,7 +6,7 @@ const WelcomeDisplay = () => {
     return (
         // TODO
         <Box sx={{mb: "40px"}}>
-            <Typography variant="h3" color="primary">Welcome to rust tracker. </Typography>
+            <Typography variant="h4" color="primary">Welcome to rust tracker. </Typography>
             <Typography>Display some text here about the what the site does. Only Display if the user is not logged in.</Typography>
         </Box>
     )

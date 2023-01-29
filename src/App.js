@@ -46,7 +46,7 @@ const App = () => {
   // useEffect(() => {
   //   onAuthStateChanged(auth, (user) => {
   //     if (user) {
-  //       if (!userDoc.currentUser) {
+  //       if (!userDoc.data) {
   //         dispatch(getUserData(user.uid)).unwrap().catch((e) => {
   //           // TODO
   //         })
