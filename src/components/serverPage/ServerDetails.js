@@ -55,14 +55,13 @@ const ServerDetails = ({ data }) => {
                                         formatRowELements(row)
                                     }
                                 </TableCell>
-
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Typography variant='body1' mt="0px" ml="14px" fontWeight="bold">Server Detials:</Typography>
-            <Typography variant='subtitle1' mt="0px" ml="14px">{data.attributes.details.rust_description}</Typography>
+            <Typography variant='body1' mt="0px" ml="14px" fontWeight="bold">Server Details:</Typography>
+            <Typography variant='subtitle1' mt="0px" ml="14px">{data.attributes.details.rust_description ? data.attributes.details.rust_description : "Server details not found"}</Typography>
         </Box>
     )
 };

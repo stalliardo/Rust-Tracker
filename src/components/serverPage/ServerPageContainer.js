@@ -9,17 +9,16 @@ const ServerPageContainer = ({ serverData }) => {
     const theme = useTheme();
     return (
         <Box component={Paper} sx={{ textAlign: "left", padding: "20px" }}>
-            <Typography variant="h4" textAlign="center">{serverData.attributes.name}</Typography>
+            <Typography variant="h4" textAlign="center">{serverData.data.attributes.name}</Typography>
             <Grid container mt="20px">
                 <Grid item xs={12} md={6} sx={{ borderRight: {md: `1px solid ${theme.palette.primary.main}`}, paddingRight: "20px" }}>
-                    <ServerDetails data={serverData} />
+                    <ServerDetails data={serverData.data} />
                 </Grid>
                 <Grid item xs={12} md={6} padding="0px 20px">
-                    <ServerActions data={serverData} />
-
-                    <PlayersContainer />
+                    <ServerActions data={serverData.data} />
                 </Grid>
             </Grid>
+            <PlayersContainer data={serverData.included}/>
         </Box>
     )
 }
