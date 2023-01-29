@@ -26,6 +26,10 @@ const App = () => {
   console.log("theme = ", theme);
 
   const userDoc = useSelector((state) => state.user);
+
+  console.log('userdoc = ', userDoc);
+  
+
   const auth = getAuth();
   const dispatch = useDispatch();
 

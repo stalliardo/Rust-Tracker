@@ -12,14 +12,15 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { toggleColorMode } from '../../features/theme/themeSlice';
 
 import rustLogo from '../../images/rustLogo.png';
+import useAuth from '../../custom-hooks/useAuth';
 
 const desktopNavItems = ['About', 'Contact', 'Sign In', 'Sign Out'];
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const user = useSelector((state) => state.user.data);
+  const user = useAuth();
+  
   const colorMode = useSelector((state) => state.theme.colorMode);
 
   const toggleTheme = () => {
@@ -97,7 +98,7 @@ const Navbar = (props) => {
             }
             {
               user &&
-              <Typography fontWeight="bold" variant='subtitle1' display="inline" color="primary" ml="10px">{user.firstName}</Typography>
+              <Typography fontWeight="bold" variant='subtitle1' display="inline" color="primary" ml="10px">{user.username}</Typography>
             }
           </Box>
           <Box sx={{ display: { xs: 'none', md: "block" }, flexGrow: 0 }}>
