@@ -79,7 +79,7 @@ const ExtendableTable = (props) => {
                 <TableCell sx={{ width: "100px", zIndex: 2 }}>
                   {props.editButton && <IconButton color="primary" onClick={() => handleEditClicked(row)}><EditIcon /></IconButton>}
                   {props.deleteButton && <IconButton color='error' onClick={() => handleDeleteClicked(row)}> <DeleteIcon /> </IconButton>}
-                  {props.alertButton && <Tooltip title="Add Alert"><IconButton onClick={() => handleAlertClicked(row)}><AddAlertIcon /></IconButton></Tooltip>}
+                  {props.alertButton && <Tooltip title="Add Alert"><IconButton color='primary' onClick={() => handleAlertClicked(row)}><AddAlertIcon /></IconButton></Tooltip>}
                 </TableCell>
               }
             </TableRow>
