@@ -6,7 +6,7 @@ export const userSlice = createSlice({
     initialState: {
         data: null,
         isLoading: false,
-        isLoadingUserData: true,
+        isLoadingUserData: false,
     },
     reducers: {
         setUser: (state, action) => {
@@ -51,10 +51,6 @@ export const userSlice = createSlice({
         builder.addCase(getUserData.rejected, (state) => {
             state.isLoadingUserData = false;
         });
-
-        builder.addCase(logOut.fulfilled, (state) => {
-            state.data = null;
-        });
     }
 })
 
@@ -68,6 +64,8 @@ export const signUpUser = createAsyncThunk(
             const credential = await signUpUserWithEmailAndPassword(formData);
             const serializedUser = {                
                 name: formData.firstName + " " + formData.lastName,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
                 username: formData.username,
                 email: formData.email,
                 uid: credential.user.uid

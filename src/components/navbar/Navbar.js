@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
-import { logOut } from '../../features/user/userSlice';
-
-import { Box, Container, Paper, IconButton, Toolbar, Typography, Button } from '@mui/material';
+import { Box, Container, Paper, IconButton, Toolbar, Typography } from '@mui/material';
 
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -31,7 +29,11 @@ const Navbar = (props) => {
   const filterAuthenticatedNavItems = (navItem) => {
     const activeLinkStyle = {
       textDecoration: "none",
-      color: "#de4300"
+      color: "orange"
+    }
+
+    const inActiveStyle = {
+      color: colorMode === "dark" ? "white" : "black"
     }
 
     let formattedLink = "";
@@ -42,7 +44,7 @@ const Navbar = (props) => {
         break;
       }
       case "Sign Out" : {
-        formattedLink = "auth"
+        formattedLink = "sign-out"
         break;
       }
 
@@ -51,12 +53,13 @@ const Navbar = (props) => {
 
     if (user && navItem === "Sign In") return null;
     if (!user && navItem === "Sign Out") return null;
+
     return (
       <NavLink
         key={navItem}
         to={formattedLink}
         style={({ isActive }) =>
-          isActive ? activeLinkStyle : undefined
+          isActive ? activeLinkStyle : inActiveStyle
         }
       >
         {navItem}
@@ -91,6 +94,10 @@ const Navbar = (props) => {
               desktopNavItems.map((item) => (
                 filterAuthenticatedNavItems(item)
               ))
+            }
+            {
+              user &&
+              <Typography fontWeight="bold" variant='subtitle1' display="inline" color="primary" ml="10px">{user.firstName}</Typography>
             }
           </Box>
           <Box sx={{ display: { xs: 'none', md: "block" }, flexGrow: 0 }}>

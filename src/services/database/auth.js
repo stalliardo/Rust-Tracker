@@ -15,7 +15,9 @@ export const signUpUserWithEmailAndPassword = async (formData) => {
         const credential = await createUserWithEmailAndPassword(auth, email, password);
 
         await setDoc(doc(db, "users", credential.user.uid), {
-            name: firstName + " " + lastName,
+            fullName: firstName + " " + lastName,
+            firstName,
+            lastName,
             username
         });
 
@@ -45,6 +47,6 @@ export const getUserDoc = async (userId) => {
     }
 }
 
-export const logUserOut = () => {
+export const logUserOut = async () => {
     return signOut(auth);
 }
