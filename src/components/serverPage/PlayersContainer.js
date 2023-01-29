@@ -8,10 +8,12 @@ import ExtendableModal from '../modal/extendableModal/ExtendableModal';
 import { getActivePlayTime, sortByLongestPlayTimeFirst } from '../../utils/dateUtils';
 import { useSelector } from 'react-redux';
 import UserNotAuthedModel from '../modal/UserNotAuthedModel';
+import { useNavigate } from 'react-router-dom';
 
 const PlayersContainer = ({ data }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time", ""], rows: [] });
-    const [showNotAuthedModel, setShowNotAuthedModel] = useState(true);
+    const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);
+    const navigate = useNavigate();
 
     const user = useSelector(state => state.user.data);
 
@@ -35,7 +37,7 @@ const PlayersContainer = ({ data }) => {
         if (user) {
             console.log("user is authed");
         } else {
-            console.log("user is not authed!!!");
+            setShowNotAuthedModel(true);
         }
         console.log("Row = ", row);
     }
@@ -44,12 +46,17 @@ const PlayersContainer = ({ data }) => {
         setShowNotAuthedModel(false);
     }
 
+    const handleNavigateToAuth = () => {
+        navigate("/auth");
+    }
+
     return (
         <Box mt="60px">
             {
                 showNotAuthedModel &&
                 <ExtendableModal 
-                    modalClosed={handleModalClosed} 
+                    modalClosed={handleModalClosed}
+                    handleConfirm={handleNavigateToAuth}
                     confirmButtonText="Register or Sign in"
                     title="You are not signed in"
                     minHeight="200px"
