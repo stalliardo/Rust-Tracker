@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import ExtendableTable from '../table/ExtendableTable';
-import { getActivePlayTime } from '../../utils/dateUtils';
+import { getActivePlayTime, sortByLongestPlayTimeFirst } from '../../utils/dateUtils';
 
 const PlayersContainer = ({ data }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time"], rows: [] });
 
     useEffect(() => {
         const filteredData = [];
-        console.log("datta = ", data);
 
         data.forEach((element) => {
             if (element.type === "session") filteredData.push(element);
@@ -19,10 +18,10 @@ const PlayersContainer = ({ data }) => {
 
         filteredData.forEach((element) => {
             formattedRows.push({ name: element.attributes.name, playTime: getActivePlayTime(element.attributes.start) });
+
         });
 
-        setTableData({ ...tableData, rows: formattedRows });
-
+        setTableData({ ...tableData, rows: sortByLongestPlayTimeFirst(formattedRows) });
     }, [data]);
 
     return (

@@ -8,3 +8,23 @@ export const getActivePlayTime = (start) => {
 
     return hours + ":" + minutes;
 }
+
+export const sortByLongestPlayTimeFirst = (sessionArray) => {
+    return sessionArray.sort(function(a, b) {
+        // Extract the hours and minutes from the playTime strings
+        const aTime = a.playTime.split(':');
+        const bTime = b.playTime.split(':');
+        const aHours = parseInt(aTime[0]);
+        const aMinutes = parseInt(aTime[1]);
+        const bHours = parseInt(bTime[0]);
+        const bMinutes = parseInt(bTime[1]);
+      
+        // Compare the hours first
+        if (aHours !== bHours) {
+          return bHours - aHours;
+        }
+      
+        // If the hours are the same, compare the minutes
+        return bMinutes - aMinutes;
+      });
+}
