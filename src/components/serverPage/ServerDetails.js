@@ -55,7 +55,6 @@ const ServerDetails = ({ data }) => {
                                         formatRowELements(row)
                                     }
                                 </TableCell>
-
                             </TableRow>
                         ))}
                     </TableBody>

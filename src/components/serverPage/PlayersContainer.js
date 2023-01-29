@@ -1,14 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+import ExtendableTable from '../table/ExtendableTable';
 
-const PlayersContainer = () => {
+const PlayersContainer = ({ data }) => {
+    const [tableData, setTableData] = useState({ head: ["Name", "Play Time"], rows: [] });
+
+    useEffect(() => {
+        const filteredData = [];
+        console.log("datta = ", data);
+
+        data.forEach((element) => {
+            if (element.type === "session") filteredData.push(element);
+        });
+
+        const formattedRows = [];
+
+        filteredData.forEach((element) => {
+            console.log("Filtred data = ", element);
+            formattedRows.push({ name: element.attributes.name, playTime: "TODO" })
+        });
+
+        setTableData({ ...tableData, rows: formattedRows });
+
+    }, [data]);
+
     return (
-        <Typography variant="h6" mt="80px" color="primary" textAlign="left" sx={{ textDecoration: "underline", height: "1000px" }}>
-            Online Players
-        </Typography>
-
-        // Add the players list here in a table 
+        <Box mt="60px">
+            <Typography variant="h6" color="primary" textAlign="left" sx={{ textDecoration: "underline" }}>
+                Online Players
+            </Typography>
+            <Box mt="10px">
+                <ExtendableTable data={tableData} />
+            </Box>
+        </Box>
     )
 }
 

@@ -11,8 +11,7 @@ const Server = () => {
 
     useEffect(() => {
         getServerById(serverId).then(response => {
-            console.log("response = ", response);
-            setData(response.data.data);
+            setData(response.data);
         }).catch(e => {
             console.log("Error getting the server. Error: ", e);
             // navigate to index?
@@ -29,4 +28,4 @@ const Server = () => {
     }
 }
 
-export default Server
+export default Server;
