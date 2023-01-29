@@ -8,7 +8,6 @@ import useAuthModal from '../../custom-hooks/useAuthModal';
 import useAuth from '../../custom-hooks/useAuth';
 
 const RegisteredUserActions = () => {
-    // const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);
     const { isOpen, handleOpen, handleClose, handleNavigateToAuth } = useAuthModal();
     const isAuthenticated = useAuth();
 
@@ -19,7 +18,7 @@ const RegisteredUserActions = () => {
         } else {
             handleOpen();
         }
-    }
+    };
 
     const handleCreateServerAlerts = () => {
         if(isAuthenticated) {
@@ -27,7 +26,15 @@ const RegisteredUserActions = () => {
         } else {
             handleOpen();
         }
-    }
+    };
+
+    const handleSaveNote = () => {
+        if(isAuthenticated){
+            // Save server note
+        } else {
+            handleOpen();
+        }
+    };
 
     return (
         <Box sx={{ mt: "30px" }}>
@@ -49,7 +56,7 @@ const RegisteredUserActions = () => {
                 <Button variant="contained" sx={{ width: "40%" }} onClick={handleCreateServerAlerts}>Create Alerts</Button>
             </Box>
             <TextField fullWidth label="Add Note" sx={{ mt: "30px" }} />
-            <Button variant="contained" sx={{ width: "40%", mt: "20px" }}>Save Note</Button>
+            <Button variant="contained" sx={{ width: "40%", mt: "20px" }} onClick={handleSaveNote}>Save Note</Button>
             {/* TEST below on gaming pc, link also needs to be dynamic*/}
             <Link sx={{ display: "block", mt: "20px", textDecoration: "none" }} href="steam://connect/168.100.161.157:28015">Connect to sever</Link>
         </Box>

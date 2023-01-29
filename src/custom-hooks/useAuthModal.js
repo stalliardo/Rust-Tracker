@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 const useAuthModal = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const user = useSelector(state => state.user.data);
     const navigate = useNavigate();
 
     const handleOpen = () => {
@@ -16,12 +14,10 @@ const useAuthModal = () => {
     }
 
     const handleNavigateToAuth = () => {
-        navigate("/"); 
+        navigate("/auth"); 
     }
 
     return { isOpen, handleOpen, handleClose, handleNavigateToAuth };
 }
 
-
-
-export default useAuthModal
+export default useAuthModal;
