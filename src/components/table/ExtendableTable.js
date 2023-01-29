@@ -14,8 +14,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddAlertIcon from '@mui/icons-material/AddAlert';
 
-
-
 const allowRowToRender = (key, disallowedKeys) => {
   let canRender = true;
   if (disallowedKeys?.length) {
@@ -90,4 +88,4 @@ const ExtendableTable = (props) => {
   )
 }
 
-export default ExtendableTable
+export default ExtendableTable;

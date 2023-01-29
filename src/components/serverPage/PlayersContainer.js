@@ -13,13 +13,13 @@ import { useNavigate } from 'react-router-dom';
 const PlayersContainer = ({ data }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time", ""], rows: [] });
     const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);
+
     const navigate = useNavigate();
 
     const user = useSelector(state => state.user.data);
 
     useEffect(() => {
         const filteredData = [];
-
         data.forEach((element) => {
             if (element.type === "session") filteredData.push(element);
         });
@@ -33,13 +33,12 @@ const PlayersContainer = ({ data }) => {
     }, [data]);
 
     const handleAddAlert = (row) => {
-        // Check for authed user...
         if (user) {
+            // TODO
             console.log("user is authed");
         } else {
             setShowNotAuthedModel(true);
         }
-        console.log("Row = ", row);
     }
 
     const handleModalClosed = () => {
@@ -78,8 +77,3 @@ const PlayersContainer = ({ data }) => {
 }
 
 export default PlayersContainer;
-
-// TODO:
-    // Add a flag action to the rows - DONE
-    // Handle alert clicks:
-        // - Check if user is authed, if not display a model prompting a user to register or sign up

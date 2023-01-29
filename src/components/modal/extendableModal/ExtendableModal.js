@@ -54,7 +54,6 @@ const ExtendableModal = (props) => {
                         <Button variant='contained' style={buttonStyle} onClick={handleClose}>Cancel</Button>
                     </Box>
                 </Box>
-
             </Modal>
         </div>
     )
