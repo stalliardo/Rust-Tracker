@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import ExtendableTable from '../table/ExtendableTable';
+import { getActivePlayTime } from '../../utils/dateUtils';
 
 const PlayersContainer = ({ data }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time"], rows: [] });
@@ -17,8 +18,7 @@ const PlayersContainer = ({ data }) => {
         const formattedRows = [];
 
         filteredData.forEach((element) => {
-            console.log("Filtred data = ", element);
-            formattedRows.push({ name: element.attributes.name, playTime: "TODO" })
+            formattedRows.push({ name: element.attributes.name, playTime: getActivePlayTime(element.attributes.start) });
         });
 
         setTableData({ ...tableData, rows: formattedRows });
