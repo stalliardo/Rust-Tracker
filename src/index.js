@@ -7,11 +7,11 @@ import { Provider } from 'react-redux';
 
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 
-import Navbar from './components/navbar/Navbar';
 import Auth from './components/auth/Auth';
 import PageNotFound from './components/errors/PageNotFound';
 import Index from './routes/Index';
 import Server from './routes/Server';
+import SignOut from './routes/SignOut';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -23,6 +23,7 @@ root.render(
             <Route index element={<Index />} />
             <Route path="*" element={<PageNotFound />}/>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/sign-out" element={<SignOut />} />
             <Route path="servers">
               <Route index element={<PageNotFound />}/>
               <Route path=":serverId" element={<Server />}/>
