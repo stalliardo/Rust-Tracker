@@ -18,7 +18,7 @@ const ServerActions = ({ data }) => {
             {/* TODO decide whether to use a link or a large button */}
             {!isAuthenticated && <Link href="/auth" sx={{ textDecoration: "none" }}>Register</Link>}
             <Typography mt="20px" variant="h6" color="primary" sx={{ textDecoration: "underline" }}>Socials</Typography>
-            <Typography>Website: {data.attributes.details.rust_url ? <Box component="span"><Link sx={{ textDecoration: "none" }} href={data.attributes.details.rust_url}>{data.attributes.details.rust_url}</Link></Box> : "Not Found!"}</Typography>
+            <Typography>Website: {data.attributes.details.rust_url ? <Box component="span"><Link sx={{ textDecoration: "none" }} target="_blank" rel="noopener" href={data.attributes.details.rust_url}>{data.attributes.details.rust_url}</Link></Box> : "Not Found!"}</Typography>
             <RegisteredUserActions />
         </Box>
     )

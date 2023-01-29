@@ -50,15 +50,17 @@ const RegisteredUserActions = () => {
                     <UserNotAuthedModel />
                 </ExtendableModal>
             }
-            <Typography variant="h6" color="primary" sx={{ textDecoration: "underline", mb: "10px" }}>Server Actions</Typography>
-            <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Typography variant="h6" color="primary" sx={{ textDecoration: "underline" }}>Server Actions</Typography>
+            {/* TEST below on gaming pc, link also needs to be dynamic*/}
+            <Link sx={{ display: "block", mt: "10px", textDecoration: "none" }} href="steam://connect/168.100.161.157:28015">Connect to sever</Link>
+
+            <Box sx={{ display: "flex", justifyContent: "space-between", mt: "20px" }}>
                 <Button variant="contained" sx={{ width: "40%" }} onClick={handleAddServerToFavourites}>Favourite</Button>
                 <Button variant="contained" sx={{ width: "40%" }} onClick={handleCreateServerAlerts}>Create Alerts</Button>
             </Box>
             <TextField fullWidth label="Add Note" sx={{ mt: "30px" }} />
             <Button variant="contained" sx={{ width: "40%", mt: "20px" }} onClick={handleSaveNote}>Save Note</Button>
-            {/* TEST below on gaming pc, link also needs to be dynamic*/}
-            <Link sx={{ display: "block", mt: "20px", textDecoration: "none" }} href="steam://connect/168.100.161.157:28015">Connect to sever</Link>
+            <Typography mt="20px">TODO add notes here... in a max height container</Typography>
         </Box>
     )
 };
