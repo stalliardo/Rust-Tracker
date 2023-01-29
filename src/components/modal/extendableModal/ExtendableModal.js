@@ -6,6 +6,12 @@ import Typography from '@mui/material/Typography';
 
 import CircularIndicator from '../../loadingIndicator/CircularIndicator';
 
+import { Button } from '@mui/material';
+
+const buttonStyle = {
+    width: "40%"
+};
+
 const ExtendableModal = (props) => {
     const [open, setOpen] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
@@ -34,12 +40,17 @@ const ExtendableModal = (props) => {
                     p: 4,
                     minHeight: props.minHeight || "400px"
                 }}>
-                    <Typography variant="h4" align="center" mb="20px">{props.title}</Typography>
+                    <Typography variant="h5" align="center" mb="20px">{props.title}</Typography>
 
                     {isLoading ? <CircularIndicator style={{ mt: "20px" }} /> :
                         props.children
                     }
+                    <Box sx={{ display: "flex", justifyContent: "space-between", mt: "20px" }}>
+                        <Button variant='contained' style={buttonStyle}>{props.confirmButtonText}</Button>
+                        <Button variant='contained' style={buttonStyle} onClick={handleClose}>Cancel</Button>
+                    </Box>
                 </Box>
+
             </Modal>
         </div>
     )
