@@ -29,8 +29,11 @@ const PlayersContainer = ({ data }) => {
             <Typography variant="h6" color="primary" textAlign="left" sx={{ textDecoration: "underline" }}>
                 Online Players
             </Typography>
-            <Box mt="10px">
-                <ExtendableTable data={tableData} />
+            <Box mt="10px" sx={{minHeight: "200px", paddingBottom: "60px"}}>
+                {
+                    data.length > 0 ? <ExtendableTable data={tableData} />
+                    : <Typography variant="h5" color="primary" textAlign="center">0 players online</Typography>
+                }
             </Box>
         </Box>
     )
