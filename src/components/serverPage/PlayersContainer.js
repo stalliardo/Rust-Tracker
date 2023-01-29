@@ -4,9 +4,11 @@ import { Box, Typography } from '@mui/material';
 
 import ExtendableTable from '../table/ExtendableTable';
 import { getActivePlayTime, sortByLongestPlayTimeFirst } from '../../utils/dateUtils';
+import { useSelector } from 'react-redux';
 
 const PlayersContainer = ({ data }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time", ""], rows: [] });
+    const user = useSelector(state => state.user.data);
 
     useEffect(() => {
         const filteredData = [];
@@ -24,6 +26,12 @@ const PlayersContainer = ({ data }) => {
     }, [data]);
 
     const handleAddAlert = (row) => {
+        // Check for authed user...
+        if(user){
+            console.log("user is authed");
+        } else {
+            console.log("user is not authed!!!");
+        }
         console.log("Row = ", row);
     }
 
