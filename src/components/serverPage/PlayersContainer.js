@@ -45,4 +45,6 @@ const PlayersContainer = ({ data }) => {
 export default PlayersContainer;
 
 // TODO:
-    // Add a flag action to the rows 
+    // Add a flag action to the rows - DONE
+    // Handle alert clicks:
+        // - Check if user is authed, if not display a model prompting a user to register or sign up

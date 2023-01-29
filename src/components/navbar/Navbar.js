@@ -21,7 +21,7 @@ const Navbar = (props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state) => state.user.currentUser);
+  const user = useSelector((state) => state.user.data);
   const colorMode = useSelector((state) => state.theme.colorMode);
 
   const toggleTheme = () => {

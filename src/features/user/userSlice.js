@@ -4,13 +4,13 @@ import { signUpUserWithEmailAndPassword, getUserDoc, logUserOut, signInUserWithE
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        currentUser: null,
+        data: null,
         isLoading: false,
         isLoadingUserData: true,
     },
     reducers: {
         setUser: (state, action) => {
-            state.currentUser = action.payload;
+            state.data = action.payload;
         },
 
         noUserFound: (state, action) => {
@@ -18,7 +18,7 @@ export const userSlice = createSlice({
         },
 
         setGangId: (state, action) => {
-            state.currentUser = {...state.currentUser, gangId: action.payload}
+            state.data = {...state.data, gangId: action.payload}
         },
     },
     extraReducers: (builder) => {
@@ -28,7 +28,7 @@ export const userSlice = createSlice({
 
         builder.addCase(signUpUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.currentUser = action.payload;
+            state.data = action.payload;
         });
 
         builder.addCase(signUpUser.rejected, (state, action) => {
@@ -45,7 +45,7 @@ export const userSlice = createSlice({
 
         builder.addCase(getUserData.fulfilled, (state, action) => {
             state.isLoadingUserData = false;
-            state.currentUser = action.payload;
+            state.data = action.payload;
         });
 
         builder.addCase(getUserData.rejected, (state) => {
@@ -53,7 +53,7 @@ export const userSlice = createSlice({
         });
 
         builder.addCase(logOut.fulfilled, (state) => {
-            state.currentUser = null;
+            state.data = null;
         });
     }
 })
