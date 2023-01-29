@@ -8,9 +8,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
 
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import AddAlertIcon from '@mui/icons-material/AddAlert';
+
+
 
 const allowRowToRender = (key, disallowedKeys) => {
   let canRender = true;
@@ -38,6 +42,10 @@ const ExtendableTable = (props) => {
     props.handleRowClicked(row);
   }
 
+  const handleAlertClicked = (row) => {
+    props.handleAlertClicked(row);
+  }
+
   return (
     <TableContainer component={Paper} elevation={8}>
       <Table sx={{
@@ -59,7 +67,7 @@ const ExtendableTable = (props) => {
             <TableRow
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              onClick={() => handleRowClick(row)}
+              onClick={!props.rowClickingDisabled ? () => handleRowClick(row) : null}
             >
               {Object.keys(row).map((r, inx) => {
                 return (
@@ -67,10 +75,11 @@ const ExtendableTable = (props) => {
                 )
               })}
 
-              {(props.deleteButton || props.editButton) &&
-                <TableCell sx={{ width: "100px" }}>
+              {(props.deleteButton || props.editButton || props.alertButton) &&
+                <TableCell sx={{ width: "100px", zIndex: 2 }}>
                   {props.editButton && <IconButton color="primary" onClick={() => handleEditClicked(row)}><EditIcon /></IconButton>}
                   {props.deleteButton && <IconButton color='error' onClick={() => handleDeleteClicked(row)}> <DeleteIcon /> </IconButton>}
+                  {props.alertButton && <Tooltip title="Add Alert"><IconButton onClick={() => handleAlertClicked(row)}><AddAlertIcon /></IconButton></Tooltip>}
                 </TableCell>
               }
             </TableRow>
