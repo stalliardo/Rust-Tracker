@@ -40,3 +40,6 @@ const PlayersContainer = ({ data }) => {
 }
 
 export default PlayersContainer;
+
+// TODO:
+    // Add a flag action to the rows 
