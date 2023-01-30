@@ -7,23 +7,29 @@ import ExtendableModal from '../modal/extendableModal/ExtendableModal';
 import useModal from '../../custom-hooks/useModal';
 import useAuth from '../../custom-hooks/useAuth';
 
+
 import { useNavigate } from 'react-router-dom';
 
-const RegisteredUserActions = () => {
+import { useDispatch } from 'react-redux';
+import { addServer } from '../../features/server/serverSlice';
+
+const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
-    const isAuthenticated = useAuth();
+    const { isAuthenticated, id: userId } = useAuth();
+
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleAddServerToList = () => {
-        if(isAuthenticated) {
-            // add server to user favs list
+        if (isAuthenticated) {
+            dispatch(addServer({ serverId: serverData.id, userId, serverName: serverData.attributes.name }));
         } else {
             handleOpen();
         }
     };
 
     const handleCreateServerAlerts = () => {
-        if(isAuthenticated) {
+        if (isAuthenticated) {
             // Create server alerts
         } else {
             handleOpen();
@@ -31,7 +37,7 @@ const RegisteredUserActions = () => {
     };
 
     const handleSaveNote = () => {
-        if(isAuthenticated){
+        if (isAuthenticated) {
             // Save server note
         } else {
             handleOpen();
@@ -39,7 +45,7 @@ const RegisteredUserActions = () => {
     };
 
     const handleNavigateToAuth = () => {
-        navigate("/auth"); 
+        navigate("/auth");
     }
 
     return (

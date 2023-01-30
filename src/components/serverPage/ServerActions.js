@@ -5,7 +5,7 @@ import useAuth from '../../custom-hooks/useAuth';
 
 const ServerActions = ({ data }) => {
     const { isAuthenticated } = useAuth();
-
+    
     return (
         <Box>
             <Typography variant="h6" color="primary" sx={{ textDecoration: "underline" }}>Registered user perks</Typography>
@@ -19,7 +19,7 @@ const ServerActions = ({ data }) => {
             {!isAuthenticated && <Link href="/auth" sx={{ textDecoration: "none" }}>Register</Link>}
             <Typography mt="20px" variant="h6" color="primary" sx={{ textDecoration: "underline" }}>Socials</Typography>
             <Typography>Website: {data.attributes.details.rust_url ? <Box component="span"><Link sx={{ textDecoration: "none" }} target="_blank" rel="noopener" href={data.attributes.details.rust_url}>{data.attributes.details.rust_url}</Link></Box> : "Not Found!"}</Typography>
-            <RegisteredUserActions />
+            <RegisteredUserActions serverData={data}/>
         </Box>
     )
 };
