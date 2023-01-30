@@ -14,7 +14,7 @@ const SearchResultsContainer = ({ searchResults }) => {
     const navigate = useNavigate();
 
     const handleRowClicked = (row) => {
-        navigate(`/servers/${row.id}`);
+        navigate(`/server/${row.id}`);
     }
 
     const onPageChaned = (event, newPage) => {
