@@ -23,8 +23,10 @@ export const addServer = createAsyncThunk(
     "server/addServer",
     async (data) => {
         try {
-            console.log("try callde");
             await add(data);
+
+            // TODO - add the server to the state servers array
+            
         } catch (error) {
             console.log("Error =", error);
             throw error;
