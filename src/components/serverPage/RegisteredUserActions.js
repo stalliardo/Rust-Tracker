@@ -4,13 +4,15 @@ import { Box, Button, TextField, Typography, Link } from '@mui/material';
 
 import UserNotAuthedModel from '../modal/UserNotAuthedModel';
 import ExtendableModal from '../modal/extendableModal/ExtendableModal';
-import useAuthModal from '../../custom-hooks/useAuthModal';
+import useModal from '../../custom-hooks/useModal';
 import useAuth from '../../custom-hooks/useAuth';
 
-const RegisteredUserActions = () => {
-    const { isOpen, handleOpen, handleClose, handleNavigateToAuth } = useAuthModal();
-    const isAuthenticated = useAuth();
+import { useNavigate } from 'react-router-dom';
 
+const RegisteredUserActions = () => {
+    const { isOpen, handleOpen, handleClose } = useModal();
+    const isAuthenticated = useAuth();
+    const navigate = useNavigate();
 
     const handleAddServerToFavourites = () => {
         if(isAuthenticated) {
@@ -35,6 +37,10 @@ const RegisteredUserActions = () => {
             handleOpen();
         }
     };
+
+    const handleNavigateToAuth = () => {
+        navigate("/auth"); 
+    }
 
     return (
         <Box sx={{ mt: "30px" }}>
