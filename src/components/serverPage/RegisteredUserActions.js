@@ -14,7 +14,7 @@ const RegisteredUserActions = () => {
     const isAuthenticated = useAuth();
     const navigate = useNavigate();
 
-    const handleAddServerToFavourites = () => {
+    const handleAddServerToList = () => {
         if(isAuthenticated) {
             // add server to user favs list
         } else {
@@ -61,7 +61,7 @@ const RegisteredUserActions = () => {
             <Link sx={{ display: "block", mt: "10px", textDecoration: "none" }} href="steam://connect/168.100.161.157:28015">Connect to sever</Link>
 
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: "20px" }}>
-                <Button variant="contained" sx={{ width: "40%" }} onClick={handleAddServerToFavourites}>Favourite</Button>
+                <Button variant="contained" sx={{ width: "40%" }} onClick={handleAddServerToList}>Add to server list</Button>
                 <Button variant="contained" sx={{ width: "40%" }} onClick={handleCreateServerAlerts}>Create Alerts</Button>
             </Box>
             <TextField fullWidth label="Add Note" sx={{ mt: "30px" }} />
