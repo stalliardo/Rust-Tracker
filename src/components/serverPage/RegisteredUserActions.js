@@ -9,8 +9,8 @@ import ExtendableModal from '../modal/extendableModal/ExtendableModal';
 import useModal from '../../custom-hooks/useModal';
 import useAuth from '../../custom-hooks/useAuth';
 
-import { addServer } from '../../services/database/rustServers';
-import { addServerToArray } from '../../features/user/userSlice';
+import { addServer, deleteServer } from '../../services/database/rustServers';
+import { addServerToArray, removeServer } from '../../features/user/userSlice';
 
 const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
@@ -24,7 +24,6 @@ const RegisteredUserActions = ({ serverData }) => {
 
     const handleAddServerToList = () => {
         if (isAuthenticated) {
-
             const newServerData = { serverId: serverData.id, userId, serverName: serverData.attributes.name };
                 addServer(newServerData).then(() => {
                     delete newServerData.userId;
@@ -41,9 +40,11 @@ const RegisteredUserActions = ({ serverData }) => {
     };
 
     const handleRemoveServerFromList = () => {
-        // TODO
-        // Delete doc from subcollection
-        // Remove from state
+        deleteServer({userId, serverId: serverData.id}).then(() => {
+            dispatch(removeServer(serverData.id));
+        }).catch(e => {
+            console.log('Error deleting server. Error: ', e);            
+        })
     }
 
     const handleCreateServerAlerts = () => {

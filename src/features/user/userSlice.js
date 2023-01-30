@@ -24,6 +24,10 @@ export const userSlice = createSlice({
 
         addServerToArray: (state, action) => {            
             state.servers.push(action.payload);
+        },
+
+        removeServer: (state, action) => {
+            state.servers = state.servers.filter(server => server.id !== action.payload);
         }
     },
     extraReducers: (builder) => {
@@ -61,7 +65,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, noUserFound, addServerToArray } = userSlice.actions;
+export const { setUser, noUserFound, addServerToArray, removeServer } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
