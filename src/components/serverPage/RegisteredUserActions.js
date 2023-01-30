@@ -1,27 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, TextField, Typography, Link } from '@mui/material';
 
 import UserNotAuthedModel from '../modal/UserNotAuthedModel';
 import ExtendableModal from '../modal/extendableModal/ExtendableModal';
-import useAuthModal from '../../custom-hooks/useAuthModal';
+import useModal from '../../custom-hooks/useModal';
 import useAuth from '../../custom-hooks/useAuth';
 
-const RegisteredUserActions = () => {
-    const { isOpen, handleOpen, handleClose, handleNavigateToAuth } = useAuthModal();
-    const isAuthenticated = useAuth();
+import { addServer, deleteServer } from '../../services/database/rustServers';
+import { addServerToArray, removeServer } from '../../features/user/userSlice';
 
+const RegisteredUserActions = ({ serverData }) => {
+    const { isOpen, handleOpen, handleClose } = useModal();
+    const { isAuthenticated, id: userId } = useAuth();
 
-    const handleAddServerToFavourites = () => {
-        if(isAuthenticated) {
-            // add server to user favs list
+    const serverDataFromState = useSelector(state => state.user.servers);
+    const serverAlreadyAdded = serverDataFromState.find(server => server.id === serverData.id);
+    
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const handleAddServerToList = () => {
+        if (isAuthenticated) {
+            const newServerData = { serverId: serverData.id, userId, serverName: serverData.attributes.name };
+                addServer(newServerData).then(() => {
+                    delete newServerData.userId;
+                    delete newServerData.serverId;
+                    newServerData.id = serverData.id;
+                    dispatch(addServerToArray({ ...newServerData, notes: "" }));
+                }).catch(e => {
+                    console.log('error from addserver = ', e);
+                });
+            
         } else {
             handleOpen();
         }
     };
 
+    const handleRemoveServerFromList = () => {
+        deleteServer({userId, serverId: serverData.id}).then(() => {
+            dispatch(removeServer(serverData.id));
+        }).catch(e => {
+            console.log('Error deleting server. Error: ', e);            
+        })
+    }
+
     const handleCreateServerAlerts = () => {
-        if(isAuthenticated) {
+        if (isAuthenticated) {
             // Create server alerts
         } else {
             handleOpen();
@@ -29,12 +56,16 @@ const RegisteredUserActions = () => {
     };
 
     const handleSaveNote = () => {
-        if(isAuthenticated){
+        if (isAuthenticated) {
             // Save server note
         } else {
             handleOpen();
         }
     };
+
+    const handleNavigateToAuth = () => {
+        navigate("/auth");
+    }
 
     return (
         <Box sx={{ mt: "30px" }}>
@@ -55,7 +86,12 @@ const RegisteredUserActions = () => {
             <Link sx={{ display: "block", mt: "10px", textDecoration: "none" }} href="steam://connect/168.100.161.157:28015">Connect to sever</Link>
 
             <Box sx={{ display: "flex", justifyContent: "space-between", mt: "20px" }}>
-                <Button variant="contained" sx={{ width: "40%" }} onClick={handleAddServerToFavourites}>Favourite</Button>
+                {
+                    serverAlreadyAdded ? 
+                        <Button variant="contained" color='error' sx={{ width: "40%" }} onClick={handleRemoveServerFromList}>Remove from list</Button> :
+                        <Button variant="contained" sx={{ width: "40%" }} onClick={handleAddServerToList}>Add to server list</Button>
+                }
+
                 <Button variant="contained" sx={{ width: "40%" }} onClick={handleCreateServerAlerts}>Create Alerts</Button>
             </Box>
             <TextField fullWidth label="Add Note" sx={{ mt: "30px" }} />
@@ -66,3 +102,7 @@ const RegisteredUserActions = () => {
 };
 
 export default RegisteredUserActions;
+
+// TODO:
+    // disable the add to server list button if the server is already in the list - 
+    // get the users servers from the subcollection then add them to state.user.servers array - DONE

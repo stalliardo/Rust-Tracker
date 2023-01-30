@@ -42,8 +42,16 @@ export const getUserDoc = async (userId) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return { ...docSnap.data(), id: userId };
-    } else {
+        const serversRef = collection(db, "users", userId, "servers");
+        const serverSnapshot = await getDocs(serversRef);
+        const serverData = [];
+
+        serverSnapshot.forEach((doc) => {
+            console.log('server data = ', doc.data());
+            serverData.push({...doc.data(), id: doc.id});
+        });
+
+        return { ...docSnap.data(), id: userId, serverData };
     }
 }
 

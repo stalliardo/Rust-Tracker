@@ -5,6 +5,7 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: {
         data: null,
+        servers: [],
         isLoading: false,
         isLoadingUserData: false,
     },
@@ -20,6 +21,14 @@ export const userSlice = createSlice({
         setGangId: (state, action) => {
             state.data = {...state.data, gangId: action.payload}
         },
+
+        addServerToArray: (state, action) => {            
+            state.servers.push(action.payload);
+        },
+
+        removeServer: (state, action) => {
+            state.servers = state.servers.filter(server => server.id !== action.payload);
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(signUpUser.pending, (state) => {
@@ -45,6 +54,8 @@ export const userSlice = createSlice({
 
         builder.addCase(getUserData.fulfilled, (state, action) => {
             state.isLoadingUserData = false;
+            state.servers = action.payload.serverData;
+            delete action.payload.serverData;
             state.data = action.payload;
         });
 
@@ -54,7 +65,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, noUserFound } = userSlice.actions;
+export const { setUser, noUserFound, addServerToArray, removeServer } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",

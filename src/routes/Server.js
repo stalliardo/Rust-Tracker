@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import CircularIndicator from '../components/loadingIndicator/CircularIndicator';
 import ServerPageContainer from '../components/serverPage/ServerPageContainer';
 import { getServerById } from '../services/API/serverAPIs';
@@ -13,7 +13,6 @@ const Server = () => {
         getServerById(serverId).then(response => {
             setData(response.data);
         }).catch(e => {
-            console.log("Error getting the server. Error: ", e);
             // navigate to index?
         }).finally(() => {
             setIsLoading(false);

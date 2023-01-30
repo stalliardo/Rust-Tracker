@@ -1,10 +1,11 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
 import themeSlice from '../features/theme/themeSlice';
 import userSlice from '../features/user/userSlice';
 
 const combinedReducers = combineReducers({
   user: userSlice,
-  theme: themeSlice  
+  theme: themeSlice,
 })
 
 const rootReducer = (state, action) => {
