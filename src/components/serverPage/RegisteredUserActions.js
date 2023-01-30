@@ -11,18 +11,31 @@ import useAuth from '../../custom-hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { addServer } from '../../features/server/serverSlice';
+// import { addServer } from '../../features/server/serverSlice';
+
+import { addServer } from '../../services/database/rustServers';
+
+import { addServerToArray } from '../../features/user/userSlice';
 
 const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
     const { isAuthenticated, id: userId } = useAuth();
+
+    console.log('userid from alias = ', isAuthenticated);
+
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const handleAddServerToList = () => {
         if (isAuthenticated) {
-            dispatch(addServer({ serverId: serverData.id, userId, serverName: serverData.attributes.name }));
+            const newServerData = { serverId: serverData.id, userId, serverName: serverData.attributes.name };
+            addServer(newServerData).then(() => {
+                delete newServerData.userId;
+                dispatch(addServerToArray({ ...newServerData, notes: "" }))
+            }).catch(e => {
+                console.log('error from addserver = ', e);
+            })
         } else {
             handleOpen();
         }
@@ -78,3 +91,7 @@ const RegisteredUserActions = ({ serverData }) => {
 };
 
 export default RegisteredUserActions;
+
+// TODO:
+    // disable the add to server list button if the server is already in the list - 
+    // get the users servers from the subcollection then add them to state.user.servers array - DONE
