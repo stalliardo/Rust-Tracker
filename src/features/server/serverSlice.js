@@ -5,14 +5,14 @@ import { addServer as add } from '../../services/database/rustServers';
 export const serverSlice = createSlice({
     name: 'server',
     initialState: {
-        
+        servers: [],
     },
     reducers: {
-       
+
     },
     extraReducers: (builder) => {
-        builder.addCase(addServer.pending, (state) => {
-            state.isLoading = true;
+        builder.addCase(addServer.fulfilled, (state, action) => {
+            state.servers.push(action.payload);
         });
     }
 })
@@ -24,9 +24,8 @@ export const addServer = createAsyncThunk(
     async (data) => {
         try {
             await add(data);
-
-            // TODO - add the server to the state servers array
-            
+            delete data.userId;
+            return data;
         } catch (error) {
             console.log("Error =", error);
             throw error;
