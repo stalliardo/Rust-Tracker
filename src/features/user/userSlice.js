@@ -50,6 +50,8 @@ export const userSlice = createSlice({
 
         builder.addCase(getUserData.fulfilled, (state, action) => {
             state.isLoadingUserData = false;
+            state.servers = action.payload.serverData;
+            delete action.payload.serverData;
             state.data = action.payload;
         });
 
