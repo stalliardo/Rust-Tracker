@@ -28,6 +28,13 @@ export const userSlice = createSlice({
 
         removeServer: (state, action) => {
             state.servers = state.servers.filter(server => server.id !== action.payload);
+        },
+
+        updateNotes: (state, action) => {
+            const index = state.servers.findIndex(server => server.id === action.payload.serverId);
+            if(index >=0 ) {
+                state.servers[index].notes = action.payload.notes
+            }
         }
     },
     extraReducers: (builder) => {
@@ -65,7 +72,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, noUserFound, addServerToArray, removeServer } = userSlice.actions;
+export const { setUser, noUserFound, addServerToArray, removeServer, updateNotes } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
