@@ -18,7 +18,7 @@ const RegisteredUserActions = ({ serverData }) => {
 
     const serverDataFromState = useSelector(state => state.user.servers.find(server => server.id === serverData.id));
     const [notes, setNotes] = useState(serverDataFromState.notes || ""); // This is the array not the singular item
-    const [showEditNote, setShowEditNote] = useState(serverDataFromState.notes !== "");
+    const [showEditNote, setShowEditNote] = useState(false);
     const [notesButtonDisabled, setNotesButtonDisabled] = useState(true);
 
     const navigate = useNavigate();
