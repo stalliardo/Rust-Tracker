@@ -12,6 +12,7 @@ import PageNotFound from './components/errors/PageNotFound';
 import Index from './routes/Index';
 import Server from './routes/Server';
 import SignOut from './routes/SignOut';
+import AddedServers from './routes/AddedServers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,10 +25,11 @@ root.render(
             <Route path="*" element={<PageNotFound />}/>
             <Route path="/auth" element={<Auth />} />
             <Route path="/sign-out" element={<SignOut />} />
-            <Route path="servers">
+            <Route path="/server">
               <Route index element={<PageNotFound />}/>
               <Route path=":serverId" element={<Server />}/>
             </Route>
+            <Route path="servers" element={<AddedServers />}/>
           </Route>
         </Routes>
       </BrowserRouter>

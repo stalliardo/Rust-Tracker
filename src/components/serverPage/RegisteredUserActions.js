@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -102,7 +102,3 @@ const RegisteredUserActions = ({ serverData }) => {
 };
 
 export default RegisteredUserActions;
-
-// TODO:
-    // disable the add to server list button if the server is already in the list - 
-    // get the users servers from the subcollection then add them to state.user.servers array - DONE

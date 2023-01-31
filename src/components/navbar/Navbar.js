@@ -14,7 +14,7 @@ import { toggleColorMode } from '../../features/theme/themeSlice';
 import rustLogo from '../../images/rustLogo.png';
 import useAuth from '../../custom-hooks/useAuth';
 
-const desktopNavItems = ['About', 'Contact', 'Sign In', 'Sign Out'];
+const desktopNavItems = ['Servers', 'About', 'Contact', 'Sign In', 'Sign Out'];
 
 const Navbar = (props) => {
   const dispatch = useDispatch();
@@ -54,6 +54,7 @@ const Navbar = (props) => {
 
     if (user && navItem === "Sign In") return null;
     if (!user && navItem === "Sign Out") return null;
+    if (!user && navItem === "Servers") return null;
 
     return (
       <NavLink

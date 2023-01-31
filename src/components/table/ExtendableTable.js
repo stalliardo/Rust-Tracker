@@ -13,6 +13,7 @@ import Tooltip from '@mui/material/Tooltip';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import AddAlertIcon from '@mui/icons-material/AddAlert';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const allowRowToRender = (key, disallowedKeys) => {
   let canRender = true;
@@ -44,6 +45,10 @@ const ExtendableTable = (props) => {
     props.handleAlertClicked(row);
   }
 
+  const handleViewClicked = (row) => {
+    props.handleViewClicked(row);
+  }
+
   return (
     <TableContainer component={Paper} elevation={8}>
       <Table sx={{
@@ -73,11 +78,12 @@ const ExtendableTable = (props) => {
                 )
               })}
 
-              {(props.deleteButton || props.editButton || props.alertButton) &&
-                <TableCell sx={{ width: "100px", zIndex: 2 }}>
+              {(props.deleteButton || props.editButton || props.alertButton || props.viewButton) &&
+                <TableCell sx={{ minWidth: "100px", zIndex: 2 }}>
                   {props.editButton && <IconButton color="primary" onClick={() => handleEditClicked(row)}><EditIcon /></IconButton>}
-                  {props.deleteButton && <IconButton color='error' onClick={() => handleDeleteClicked(row)}> <DeleteIcon /> </IconButton>}
+                  {props.deleteButton && <Tooltip title={props.deleteButtonTooltipText}><IconButton color='error' onClick={() => handleDeleteClicked(row)}> <DeleteIcon /> </IconButton></Tooltip>}
                   {props.alertButton && <Tooltip title="Add Alert"><IconButton color='primary' onClick={() => handleAlertClicked(row)}><AddAlertIcon /></IconButton></Tooltip>}
+                  {props.viewButton && <Tooltip title={props.viewButtonTooltipText}><IconButton color='primary' onClick={() => handleViewClicked(row)}><VisibilityIcon /></IconButton></Tooltip>}
                 </TableCell>
               }
             </TableRow>
