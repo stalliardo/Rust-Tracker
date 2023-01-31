@@ -1,15 +1,17 @@
 import { Box, Typography, Paper } from '@mui/material';
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import ExtendableTable from '../components/table/ExtendableTable';
+import { deleteServer } from '../services/database/rustServers';
+import useAuth from '../custom-hooks/useAuth';
+import { removeServer } from '../features/user/userSlice';
 
 const AddedServers = () => {
+  const { id } = useAuth();
   const servers = useSelector(state => state.user.servers);
   const navigate = useNavigate();
-
-  console.log("servers = ", servers);
-
+  const dispatch = useDispatch();
   const [tableData, setTableData] = useState({ head: ["Server name", "Notes added", ""], rows: [] });
 
   useEffect(() => {
@@ -24,8 +26,7 @@ const AddedServers = () => {
         })
       });
 
-      setTableData({...tableData, rows: rowData});
-
+      setTableData({ ...tableData, rows: rowData });
     }
   }, [servers]);
 
@@ -34,7 +35,13 @@ const AddedServers = () => {
   }
 
   const handleDeleteClicked = (row) => {
-    console.log("delete clicked. Row = ", row);
+    const confirmation = window.confirm(`Are you sure you want to delete this server: ${row.serverName}`);
+
+    if (confirmation) {
+      deleteServer({ userId: id, serverId: row.id }).then(() => {
+        dispatch(removeServer(row.id));
+      });
+    }
   }
 
   return (
@@ -42,16 +49,16 @@ const AddedServers = () => {
       <Typography variant='h4' color="primary">Saved Servers</Typography>
       {
         servers.length > 0 ?
-          <ExtendableTable 
-            data={tableData} 
-            viewButton={true} 
+          <ExtendableTable
+            data={tableData}
+            viewButton={true}
             viewButtonTooltipText="View server"
             handleViewClicked={handleViewClicked}
-            deleteButton={true} 
+            deleteButton={true}
             deleteButtonTooltipText="Delete server"
             handleDelete={handleDeleteClicked}
             rowClickingDisabled={true}
-            /> :
+          /> :
           <Typography>Your saved servers will be displayed here.</Typography>
       }
     </Box>
@@ -59,11 +66,3 @@ const AddedServers = () => {
 }
 
 export default AddedServers;
-
-// TODO
-    // - Check the servers length
-    // - Display message if not servers "You're saved servers will be displayed here"
-    // - A title for the page "Saved Servers"
-    // - Display servers in the extendableTable
-    // - Rows will contain: server name, notes added bool, and actions: view and delete
-    // - Fix the grey pixel error in the table head

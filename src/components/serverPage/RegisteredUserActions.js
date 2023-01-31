@@ -102,7 +102,3 @@ const RegisteredUserActions = ({ serverData }) => {
 };
 
 export default RegisteredUserActions;
-
-// TODO:
-    // disable the add to server list button if the server is already in the list - 
-    // get the users servers from the subcollection then add them to state.user.servers array - DONE
