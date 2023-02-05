@@ -1,11 +1,14 @@
-const functions = require('firebase-functions');
-const admin = require('firebase-admin');
+import functions from 'firebase-functions';
 
-const { generateApiQueryFromAlerts } = require('./database');
+
+import admin from 'firebase-admin';
+import { generateApiQueryFromAlerts } from './database.js';
 
 admin.initializeApp();
 
-exports.createAlert = functions.https.onRequest(async (req, res) => {
+export const refreshPlayerStatus = functions.https.onRequest(async (req, res) => {
+
+  // Will need to pass my id via the params
 
   // const writeResult = await admin.firestore().collection('alerts').add({
   //   playerName: "Darren",
@@ -15,25 +18,33 @@ exports.createAlert = functions.https.onRequest(async (req, res) => {
   //   isOnline: null
   // });
 
+  //TODO call process.env.ADMIN_ID
+
   const promises = await generateApiQueryFromAlerts();
   const apiData = [];
 
-  const response = await Promise.all(promises);
-  response.forEach((r, index) => {
-    apiData.push({
-      meta: r.data.included[0].meta,
-      serverId: r.data.included[0].id,
-      playerId: r.data.data.id
-    });
-  })
+  if (promises.length) {
+    const response = await Promise.all(promises);
+    response.forEach((r, index) => {
+      apiData.push({
+        meta: r.data.included[0].meta,
+        serverId: r.data.included[0].id,
+        playerId: r.data.data.id
+      });
+    })
 
-  const alerts = await admin.firestore().collection("alerts").get();
+    const alerts = await admin.firestore().collection("alerts").get();
 
-  alerts.forEach(async (alert) => {
-    // find the array with the matching playerid and serverid. then update that record
-    const match = apiData.find(data => (data.serverId === alert.data().serverId && data.playerId === alert.data().playerId));
-    await alert.ref.update({ isOnline: match.meta.online })
-  })
+    alerts.forEach(async (alert) => {
+      // find the array with the matching playerid and serverid. then update that record
+      const match = apiData.find(data => (data.serverId === alert.data().serverId && data.playerId === alert.data().playerId));
+      await alert.ref.update({ isOnline: match.meta.online })
+    })
+  } else {
+    return res.json({message: "No alerts found"})
+  }
+
+
 });
 
 // exports.sendAlert = functions.firestore.document('/alerts/{documentId}')
