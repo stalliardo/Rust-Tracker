@@ -1,13 +1,8 @@
-// ALl database functions will go here
-
 import admin from 'firebase-admin';
-import functions from "firebase-functions";
-
 import { getPlayerStatusForServer } from "./api.js";
 
 export async function generateApiQueryFromAlerts() {
     const alerts = await admin.firestore().collection("alerts").get();
-    const serverIds = [];
     const promises = [];
 
     if (alerts.empty) {
