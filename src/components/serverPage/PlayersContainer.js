@@ -18,7 +18,6 @@ const PlayersContainer = ({ data }) => {
 
     const user = useSelector(state => state.user.data);
     
-
     useEffect(() => {
         const filteredData = [];
         data.forEach((element) => {
