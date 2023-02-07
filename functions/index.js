@@ -31,6 +31,8 @@ export const addDummyData = functions.https.onRequest(async (req, res) => {
 })
 
 export const refreshPlayerStatus = functions.https.onRequest(async (req, res) => {
+  // TODO - Change below to the apps url not a wildcard...
+  res.set("Access-Control-Allow-Origin", "*");
   const userId = req.query.userId;
   const adminId = process.env.ADMIN_ID;
 
@@ -46,7 +48,7 @@ export const refreshPlayerStatus = functions.https.onRequest(async (req, res) =>
           serverId: r.data.included[0].id,
           playerId: r.data.data.id
         });
-      })
+      });
 
       const alerts = await admin.firestore().collection("alerts").get();
       const updatedAlerts = [];
@@ -73,7 +75,7 @@ export const refreshPlayerStatus = functions.https.onRequest(async (req, res) =>
 
       return res.json({message: "Function execution complete."});
     } else {
-      return res.json({ message: "No alerts found" })
+      return res.json({ message: "No alerts found" });
     }
   } else {
     return res.status(403).json({ message: "The provided user id is not authorized to perform that action." })
