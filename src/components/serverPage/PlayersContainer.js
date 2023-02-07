@@ -17,6 +17,7 @@ const PlayersContainer = ({ data }) => {
     const navigate = useNavigate();
 
     const user = useSelector(state => state.user.data);
+    
 
     useEffect(() => {
         const filteredData = [];
