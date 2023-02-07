@@ -11,6 +11,7 @@ import useAuth from '../../custom-hooks/useAuth';
 
 import { addServer, deleteServer, updateServer } from '../../services/database/rustServers';
 import { addServerToArray, removeServer, updateNotes } from '../../features/user/userSlice';
+import { checkForPlayerStatusUpdate } from '../../services/backend/functions';
 
 const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
@@ -52,6 +53,13 @@ const RegisteredUserActions = ({ serverData }) => {
     const handleCreateServerAlerts = () => {
         if (isAuthenticated) {
             // Create server alerts
+
+            console.log("calling the refreshPLayerSttaus function....\n");
+
+            // test calling the refreshPlayerStatus function on the backend
+            checkForPlayerStatusUpdate().then((response) => {
+                console.log("response from backend = ", response);
+            })
         } else {
             handleOpen();
         }
