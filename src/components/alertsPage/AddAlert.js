@@ -1,6 +1,8 @@
 import { Box, Typography, Paper, Button } from '@mui/material';
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import SelectMenu from '../selectMenu/SelectMenu';
 
 const AddAlert = () => {
     const params = useParams();
@@ -11,6 +13,21 @@ const AddAlert = () => {
     const serverId = urlParams.get("serverId");
     const serverName = urlParams.get("serverName");
 
+    const [alertType, setAlertType] = useState("");
+    const alertTypeOptions = ["Player joins server", "Player leaves server"];
+
+    const [notificationType, setNotificationType] = useState("");
+    const notificationOptions = [ "Browser push notification", "Email", "SMS"];
+
+    const handleAlertTypeSelected = (e) => {
+        setAlertType(e.target.value);
+    }
+
+    const handleNotificationTypeSelected = (e) => {
+        setNotificationType(e.target.value);
+    }
+
+
     // console.log('playerId = ', playerId);
     // console.log('playerName = ', playerName);
     // console.log('serverId = ', serverId);
@@ -20,7 +37,7 @@ const AddAlert = () => {
     //     Notification.requestPermission().then(permission => {
     //         if(permission) {
     //             new Notification("Well hello there!")
-                
+
     //         }
     //     })
     // }
@@ -34,7 +51,25 @@ const AddAlert = () => {
                 <Box component="span" color="white"> {serverName} </Box>
             </Typography>
             <Box component={Paper} sx={{ textAlign: "left", padding: "20px", mt: "30px" }}>
-                Add the alert form here
+                <SelectMenu
+                    value={alertType}
+                    label="Alert Type"
+                    name="alertType"
+                    menuItems={alertTypeOptions}
+                    handleChange={handleAlertTypeSelected}
+                    required={true}
+                    styles={{ width: "50%" }}
+                />
+
+                <SelectMenu
+                    value={notificationType}
+                    label="Notification Type"
+                    name="notificationType"
+                    menuItems={notificationOptions}
+                    handleChange={handleNotificationTypeSelected}
+                    required={true}
+                    styles={{ width: "50%", mt: "20px" }}
+                />
             </Box>
         </Box>
     )
