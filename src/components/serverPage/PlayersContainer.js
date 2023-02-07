@@ -16,11 +16,6 @@ const PlayersContainer = ({ data, serverData }) => {
 
     console.log('\nplayer data = ', data);
     
-    console.log('players server id = ', serverData.data.id);
-    console.log('players server name = ', serverData.data.attributes.name);
-    
-    
-
     const navigate = useNavigate();
 
     const user = useSelector(state => state.user.data);
@@ -41,13 +36,8 @@ const PlayersContainer = ({ data, serverData }) => {
 
     const handleAddAlert = (row) => {
         if (user) {
-            // TODO
-            console.log("user is authed");
-
-            console.log('row = ', row);
-            
-
-            navigate(`/alerts/add/${row.id}?playerName=${row.name}&serverId=${serverData.data.id}&serverName=${serverData.data.attributes.name}`)
+            // TODO -> change to site url when hosted
+            navigate(`/alerts/add/${row.id}?playerName=${row.name}&serverId=${serverData.data.id}&serverName=${serverData.data.attributes.name}`);
         } else {
             setShowNotAuthedModel(true);
         }
