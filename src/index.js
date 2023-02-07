@@ -7,28 +7,32 @@ import { Provider } from 'react-redux';
 
 import { BrowserRouter, Routes, Route, } from "react-router-dom";
 
-import Navbar from './components/navbar/Navbar';
 import Auth from './components/auth/Auth';
-
-import { theme } from './theme/Theme';
-import { ThemeProvider } from '@mui/material';
-
+import PageNotFound from './components/errors/PageNotFound';
+import Index from './routes/Index';
+import Server from './routes/Server';
+import SignOut from './routes/SignOut';
+import AddedServers from './routes/AddedServers';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
   <Provider store={store}>
-    <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Navbar />
         <Routes>
           <Route path="/" element={<App />}>
-            <Route index element={<App />} />
+            <Route index element={<Index />} />
+            <Route path="*" element={<PageNotFound />}/>
             <Route path="/auth" element={<Auth />} />
+            <Route path="/sign-out" element={<SignOut />} />
+            <Route path="/server">
+              <Route index element={<PageNotFound />}/>
+              <Route path=":serverId" element={<Server />}/>
+            </Route>
+            <Route path="servers" element={<AddedServers />}/>
           </Route>
         </Routes>
       </BrowserRouter>
-    </ThemeProvider>
   </Provider>,
 );
 
