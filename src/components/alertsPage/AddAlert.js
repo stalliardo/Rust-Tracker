@@ -11,16 +11,22 @@ const AddAlert = () => {
     const serverId = urlParams.get("serverId");
     const serverName = urlParams.get("serverName");
 
-    console.log('playerId = ', playerId);
-    console.log('playerName = ', playerName);
-    console.log('serverId = ', serverId);
-    console.log('serverName = ', serverName);
+    // console.log('playerId = ', playerId);
+    // console.log('playerName = ', playerName);
+    // console.log('serverId = ', serverId);
+    // console.log('serverName = ', serverName);
 
     return (
         <Box>
-            <Typography variant="h5" color="primary">{`Add an alert for ${playerName} on the ${serverName} server`}</Typography>
+            {/* <Typography variant="h5" color="primary">{`Add an alert for ${playerName} on the ${serverName} server`}</Typography> */}
+            <Typography variant="h5" color="primary">
+                Add an alert for 
+                <Box component="span" color="white"> {playerName} </Box>
+                on the server
+                <Box component="span" color="white"> {serverName} </Box>
+            </Typography>
         </Box>
     )
 }
 
-export default AddAlert
+export default AddAlert;
