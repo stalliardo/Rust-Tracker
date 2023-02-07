@@ -50,6 +50,7 @@ const RegisteredUserActions = ({ serverData }) => {
         })
     }
 
+    // TODO - remove
     const handleCreateServerAlerts = () => {
         if (isAuthenticated) {
             // Create server alerts
