@@ -30,8 +30,6 @@ const ViewAlerts = () => {
 
   }, [alerts])
 
-  // const alerts = [];
-
   return (
 
     <Box>
