@@ -45,7 +45,7 @@ const ViewAlerts = () => {
     handleOpen();
   }
 
-  const handleEditValuesChanged = (values) => {
+  const handleEditValuesChanged = (values) => {    
     setEditSaveButtonDisabled(values.alertType === selectedAlert.alertType && values.notificationType === selectedAlert.notificationType);
     setEditedValues(values);
   }

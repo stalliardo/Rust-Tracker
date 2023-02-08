@@ -130,3 +130,7 @@ const AddAlert = () => {
 }
 
 export default AddAlert;
+
+// TODO 
+    // Need to prompt users to test the browser notiifcation to make sure they have it all set up on ther end. Ill do this
+    // in a new modal called testBrowserPushNotifications

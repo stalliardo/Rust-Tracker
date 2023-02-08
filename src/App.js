@@ -13,14 +13,12 @@ import Navbar from './components/navbar/Navbar';
 
 import { getPallete } from './theme/Theme';
 import { getUserData, noUserFound } from './features/user/userSlice';
-import { checkForPlayerStatusUpdate } from './services/backend/functions';
+import { checkForPlayerStatusUpdate, configureNotificationsForAlerts } from './services/backend/functions';
+
+import { setAlerts } from './features/alerts/alertsSlice';
+import { getAlerts } from './services/database/alerts';
 
 const App = () => {
-
-  // let counter = 0;
-
-
-
   const mode = useSelector(state => state.theme.colorMode);
   const theme = useMemo(
     () =>
@@ -36,31 +34,9 @@ const App = () => {
 
   console.log("userDoc = ", userDoc);
 
-  useEffect(() => {
-    if (userDoc.data && userDoc.data.username === "Admin") {
+  const alerts = useSelector(state => state.alerts.data);
 
-      console.log("yes this is the admin");
-
-      // setInterval(() => {
-      //   console.log("INTERVAL CALLED");
-      //   checkForPlayerStatusUpdate().then((response) => {
-      //     console.log("response = ", response);
-      //   }).catch(e => {
-      //     console.log("error getting the player status. Error: ", e);
-      //   })
-      // }, [60000]);
-
-      // checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
-      //   console.log("response = ", response);
-      //   if(response.data.data){
-      //     console.log("an update must of happened");
-      //   }
-      // }).catch(e => {
-      //   console.log("error getting the player status. Error: ", e);
-      // })
-    }
-  }, [userDoc])
-
+  
 
 
 
@@ -80,6 +56,50 @@ const App = () => {
       }
     })
   }, [])
+
+  useEffect(() => {
+    if(!isLoading){
+      if (userDoc.data && !alerts.length) {
+        getAlerts(userDoc.data.id).then((res) => {
+          dispatch(setAlerts(res));
+        }).finally(() => {
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
+      }
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    // alos, only run this if the user has alerts saved
+    if (userDoc.data && userDoc.data.username === "Admin" && alerts.length) {
+
+      console.log("yes this is the admin");
+
+      // setInterval(() => {
+      //   console.log("INTERVAL CALLED");
+      //   checkForPlayerStatusUpdate().then((response) => {
+      //     console.log("response = ", response);
+      //   }).catch(e => {
+      //     console.log("error getting the player status. Error: ", e);
+      //   })
+      // }, [60000]);
+
+      // TODO test and enable the interval
+
+  //     checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
+  //       console.log("response = ", response);
+  //       if(response.data.data){
+  //         console.log("an update must of happened");
+  //         configureNotificationsForAlerts(response.data.data, alerts)
+  //       }
+  //     }).catch(e => {
+  //       console.log("error getting the player status. Error: ", e);
+  //     })
+    }
+  }, [userDoc, alerts])
+
 
   return (
     <ThemeProvider theme={theme}>

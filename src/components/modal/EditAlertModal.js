@@ -1,5 +1,5 @@
 import React, { useEffect, useState} from 'react';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import SelectMenu from '../selectMenu/SelectMenu';
 
 const EditAlertModal = ({ alertData, handleSetDisabledButton, onChange }) => {
@@ -15,6 +15,15 @@ const EditAlertModal = ({ alertData, handleSetDisabledButton, onChange }) => {
 
     const handleNotificationTypeSelected = (e) => {
         setNotificationType(e.target.value);
+    }
+
+    // TODO - remove
+    const test = () => {
+        Notification.requestPermission().then(perm => {
+            if(perm === "granted") {
+                const noty = new Notification('this is a noty', {body: "some text"});
+            }
+        })
     }
 
     useEffect(() => {
@@ -40,6 +49,8 @@ const EditAlertModal = ({ alertData, handleSetDisabledButton, onChange }) => {
                 required={true}
                 styles={{ mt: "20px" }}
             />
+
+            <Button onClick={test}>Test noty</Button>
         </Box>
     )
 }
