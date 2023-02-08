@@ -1,8 +1,12 @@
-import { Box, Typography, Paper, Button } from '@mui/material';
-import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 
+import { Box, Typography, Paper, Container } from '@mui/material';
+import LoadingButton from '../button/LoadingButton';
 import SelectMenu from '../selectMenu/SelectMenu';
+
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { createAlert } from '../../services/database/alerts';
 
 const AddAlert = () => {
     const params = useParams();
@@ -17,7 +21,13 @@ const AddAlert = () => {
     const alertTypeOptions = ["Player joins server", "Player leaves server"];
 
     const [notificationType, setNotificationType] = useState("");
-    const notificationOptions = [ "Browser push notification", "Email", "SMS"];
+    const notificationOptions = ["Browser push notification", "Email", "SMS"];
+
+    const [saveButtonDisabled, setSaveButtonDisabled] = useState(true);
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleAlertTypeSelected = (e) => {
         setAlertType(e.target.value);
@@ -27,20 +37,20 @@ const AddAlert = () => {
         setNotificationType(e.target.value);
     }
 
+    const handleSaveAlert = () => {
+        setIsLoading(true);
+        createAlert(playerName, playerId, serverName, serverId, alertType, notificationType).then(() => {
+            navigate("/alerts");
+        }).catch(e => {
+            console.log("error adding alert. Error: ", e);
+        }).finally(() => {
+            setIsLoading(false);
+        });
+    }
 
-    // console.log('playerId = ', playerId);
-    // console.log('playerName = ', playerName);
-    // console.log('serverId = ', serverId);
-    // console.log('serverName = ', serverName);
-
-    // const handleNotificationTest = () => {
-    //     Notification.requestPermission().then(permission => {
-    //         if(permission) {
-    //             new Notification("Well hello there!")
-
-    //         }
-    //     })
-    // }
+    useEffect(() => {
+        setSaveButtonDisabled(notificationType === "" || alertType === "");
+    }, [notificationType, alertType]);
 
     return (
         <Box>
@@ -50,33 +60,30 @@ const AddAlert = () => {
                 on the server
                 <Box component="span" color="white"> {serverName} </Box>
             </Typography>
-            <Box component={Paper} sx={{ textAlign: "left", padding: "20px", mt: "30px" }}>
-                <SelectMenu
-                    value={alertType}
-                    label="Alert Type"
-                    name="alertType"
-                    menuItems={alertTypeOptions}
-                    handleChange={handleAlertTypeSelected}
-                    required={true}
-                    styles={{ width: "50%" }}
-                />
-
-                <SelectMenu
-                    value={notificationType}
-                    label="Notification Type"
-                    name="notificationType"
-                    menuItems={notificationOptions}
-                    handleChange={handleNotificationTypeSelected}
-                    required={true}
-                    styles={{ width: "50%", mt: "20px" }}
-                />
-            </Box>
+            <Container maxWidth="sm">
+                <Box component={Paper} sx={{ textAlign: "left", padding: "20px", mt: "30px" }}>
+                    <SelectMenu
+                        value={alertType}
+                        label="Alert Type"
+                        name="alertType"
+                        menuItems={alertTypeOptions}
+                        handleChange={handleAlertTypeSelected}
+                        required={true}
+                    />
+                    <SelectMenu
+                        value={notificationType}
+                        label="Notification Type"
+                        name="notificationType"
+                        menuItems={notificationOptions}
+                        handleChange={handleNotificationTypeSelected}
+                        required={true}
+                        styles={{ mt: "20px" }}
+                    />
+                    <LoadingButton text="Save Alert" clickHandler={handleSaveAlert} disabled={saveButtonDisabled} isLoading={isLoading} styles={{ mt: "20px", width: "100%" }} />
+                </Box>
+            </Container>
         </Box>
     )
 }
 
 export default AddAlert;
-
-// Form will need:
-    // 1 - Select menu, label: What would you like to receive notifications about? Options: Player joins server, Player leaves server
-    // 2 - Select Menu, label: How would you like to receive notifications?. Options: Email, sms, push, Browser. 
