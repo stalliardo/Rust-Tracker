@@ -80,7 +80,7 @@ const ExtendableTable = (props) => {
 
               {(props.deleteButton || props.editButton || props.alertButton || props.viewButton) &&
                 <TableCell sx={{ minWidth: "100px", zIndex: 2 }}>
-                  {props.editButton && <IconButton color="primary" onClick={() => handleEditClicked(row)}><EditIcon /></IconButton>}
+                  {props.editButton && <Tooltip title={props.editButtonTooltipText}><IconButton color="primary" onClick={() => handleEditClicked(row)}><EditIcon /></IconButton></Tooltip>}
                   {props.deleteButton && <Tooltip title={props.deleteButtonTooltipText}><IconButton color='error' onClick={() => handleDeleteClicked(row)}> <DeleteIcon /> </IconButton></Tooltip>}
                   {props.alertButton && <Tooltip title="Add Alert"><IconButton color='primary' onClick={() => handleAlertClicked(row)}><AddAlertIcon /></IconButton></Tooltip>}
                   {props.viewButton && <Tooltip title={props.viewButtonTooltipText}><IconButton color='primary' onClick={() => handleViewClicked(row)}><VisibilityIcon /></IconButton></Tooltip>}

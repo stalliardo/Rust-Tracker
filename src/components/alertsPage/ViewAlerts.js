@@ -39,7 +39,7 @@ const ViewAlerts = () => {
       {
         alerts.length ?
           <PageContainer>
-            <ExtendableTable data={tableData}/>
+            <ExtendableTable data={tableData} editButton={true} deleteButton={true} deleteButtonTooltipText="Delete Alert" editButtonTooltipText="Edit Alert"/>
           </PageContainer>
           :
           <Typography variant="subtitle1">You have no alerts saved.</Typography>
