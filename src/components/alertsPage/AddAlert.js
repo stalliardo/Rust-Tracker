@@ -7,6 +7,7 @@ import SelectMenu from '../selectMenu/SelectMenu';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { createAlert } from '../../services/database/alerts';
+import useAuth from '../../custom-hooks/useAuth';
 
 const AddAlert = () => {
     const params = useParams();
@@ -27,6 +28,8 @@ const AddAlert = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const {id: userId} = useAuth();
+
     const navigate = useNavigate();
 
     const handleAlertTypeSelected = (e) => {
@@ -39,7 +42,7 @@ const AddAlert = () => {
 
     const handleSaveAlert = () => {
         setIsLoading(true);
-        createAlert(playerName, playerId, serverName, serverId, alertType, notificationType).then(() => {
+        createAlert(userId, playerName, playerId, serverName, serverId, alertType, notificationType).then(() => {
             navigate("/alerts");
         }).catch(e => {
             console.log("error adding alert. Error: ", e);

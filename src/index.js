@@ -34,7 +34,7 @@ root.render(
             <Route path=":serverId" element={<Server />} />
           </Route>
           <Route path="/alerts">
-            <Route index element={<ViewAlerts />} />
+            <Route index element={<Alerts />} />
             <Route path="edit">
               <Route path=":alertId" element={<EditAlert />} />
             </Route>
