@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import PageContainer from '../page/PageContainer';
 import PageTitle from '../page/PageTitle';
 import ExtendableTable from '../table/ExtendableTable';
+import { truncateString } from '../../utils/stringUtils';
 
 const ViewAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
@@ -18,7 +19,7 @@ const ViewAlerts = () => {
     alerts.forEach((alert) => {
       formattedAlerts.push({
         playerName: alert.playerName,
-        serverName: alert.serverName,
+        serverName: truncateString(alert.serverName, 0, 30),
         alertType: alert.alertType,
         notificationType: alert.notificationType,
         id: alert.id
