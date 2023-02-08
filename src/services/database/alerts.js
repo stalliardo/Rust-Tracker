@@ -1,5 +1,5 @@
 import { db } from '../../firebase';
-import { doc, setDoc, getDoc, collection, query, where, getDocs, addDoc } from 'firebase/firestore'
+import { doc, setDoc, getDoc, collection, query, where, getDocs, addDoc, updateDoc } from 'firebase/firestore'
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 
 export const createAlert = (userId, playerName, playerId, serverName, serverId, alertType, notificationType) => {
@@ -27,4 +27,11 @@ export const getAlerts = async (userId) => {
     });
 
     return data;
+}
+
+export const updateAlert = (alertType, notificationType, alertId) => {
+    return updateDoc(doc(db, "alerts", alertId), {
+       alertType,
+       notificationType 
+    });
 }

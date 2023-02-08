@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Typography } from '@mui/material'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import PageContainer from '../page/PageContainer';
 import PageTitle from '../page/PageTitle';
 import ExtendableTable from '../table/ExtendableTable';
 import { truncateString } from '../../utils/stringUtils';
+import useModal from '../../custom-hooks/useModal';
+import EditAlertModal from '../modal/EditAlertModal';
+import ExtendableModal from '../modal/extendableModal/ExtendableModal';
+import { updateAlert } from '../../services/database/alerts';
+import { updateAlertItem } from '../../features/alerts/alertsSlice';
 
 const ViewAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
   const [tableData, setTableData] = useState({ head: ["Player Name", "Server Name", "Alert Type", "Notification Type", "Actions"], rows: [] });
 
+  const { isOpen, handleOpen, handleClose } = useModal();
+
+  const [selectedAlert, setSelectedAlert] = useState();
+  const [editSaveButtonDisabled, setEditSaveButtonDisabled] = useState(true);
+  const [editedValues, setEditedValues] = useState();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("alerts = ", alerts);
-
     const formattedAlerts = [];
 
     alerts.forEach((alert) => {
@@ -26,9 +37,45 @@ const ViewAlerts = () => {
       })
     });
 
-    setTableData({...tableData, rows: formattedAlerts})
+    setTableData({ ...tableData, rows: formattedAlerts })
 
-  }, [alerts])
+  }, [alerts]);
+
+  const handleEdit = (row) => {
+    setSelectedAlert(row);
+    handleOpen();
+  }
+
+  const handleEditValuesChanged = (values) => {
+    setEditSaveButtonDisabled(values.alertType === selectedAlert.alertType && values.notificationType === selectedAlert.notificationType);
+    setEditedValues(values);
+  }
+
+  const handleConfirmEdit = () => {
+    console.log("confirm edit called");
+    // call the updateALert function.
+    // Then => update/replace the local copy
+    console.log("edit values = ", editedValues);
+    console.log("alertId = ", selectedAlert.id);
+
+
+
+
+    
+
+
+
+    updateAlert(editedValues.alertType, editedValues.notificationType, selectedAlert.id).then(() => {
+      dispatch(updateAlertItem({id: selectedAlert.id, alertType: editedValues.alertType, notificationType: editedValues.notificationType}));
+      handleClose();
+    }).catch(e => {
+      console.log("An error occured while updating the doc. Error: ", e);
+    })
+
+
+
+
+  }
 
   return (
 
@@ -37,10 +84,33 @@ const ViewAlerts = () => {
       {
         alerts.length ?
           <PageContainer>
-            <ExtendableTable data={tableData} editButton={true} deleteButton={true} deleteButtonTooltipText="Delete Alert" editButtonTooltipText="Edit Alert"/>
+            <ExtendableTable 
+              data={tableData} 
+              editButton={true} 
+              deleteButton={true} 
+              deleteButtonTooltipText="Delete Alert" 
+              editButtonTooltipText="Edit Alert"
+              handleEdit={handleEdit}
+              rowClickingDisabled={true}
+              
+            />
           </PageContainer>
           :
           <Typography variant="subtitle1">You have no alerts saved.</Typography>
+      }
+
+      {
+        isOpen &&
+        <ExtendableModal
+          modalClosed={handleClose}
+          handleConfirm={handleConfirmEdit}
+          confirmButtonText="Save Alert"
+          title={`Edit alert for ${selectedAlert.playerName} on the ${selectedAlert.serverName} server`}
+          minHeight="200px"
+          confirmButtonDisabled={editSaveButtonDisabled}
+        >
+          <EditAlertModal alertData={selectedAlert} onChange={handleEditValuesChanged}/>
+        </ExtendableModal>
       }
     </Box>
 
