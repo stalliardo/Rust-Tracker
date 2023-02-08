@@ -50,7 +50,7 @@ const ExtendableModal = (props) => {
                         props.children
                     }
                     <Box sx={{ display: "flex", justifyContent: "space-between", mt: "20px" }}>
-                        <Button variant='contained' style={buttonStyle} onClick={handleConfirmClicked}>{props.confirmButtonText}</Button>
+                        <Button variant='contained' style={buttonStyle} onClick={handleConfirmClicked} disabled={props.confirmButtonDisabled}>{props.confirmButtonText}</Button>
                         <Button variant='contained' style={buttonStyle} onClick={handleClose}>Cancel</Button>
                     </Box>
                 </Box>
