@@ -6,6 +6,6 @@ import axios from "axios";
 
 // https://us-central1-rust-tracker.cloudfunctions.net/refreshPlayerStatus
 
-export const checkForPlayerStatusUpdate = () => {
-    return axios.get("https://us-central1-rust-tracker.cloudfunctions.net/refreshPlayerStatus?userId=wf9WPv93V6aqemaAf3uqeb4BieH3");
+export const checkForPlayerStatusUpdate = (userId) => {
+    return axios.get(`https://us-central1-rust-tracker.cloudfunctions.net/refreshPlayerStatus?userId=${userId}`);
 }
