@@ -30,6 +30,8 @@ const AddAlert = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
+    const [errorMessage, setErrorMessage] = useState("");
+
     const {id: userId} = useAuth();
 
     const navigate = useNavigate();
@@ -50,8 +52,13 @@ const AddAlert = () => {
         createAlert(data).then((response) => {
             dispatch(pushAlert(response));
             navigate("/alerts");
-        }).catch(e => {
-            console.log("error adding alert. Error: ", e);
+        }).catch(e => {            
+            if(e.message == "Error: Duplicate alert!"){
+                setErrorMessage("Cannot create duplicate alerts!");
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, [3000]);
+            }
         }).finally(() => {
             setIsLoading(false);
         });
@@ -88,6 +95,9 @@ const AddAlert = () => {
                         required={true}
                         styles={{ mt: "20px" }}
                     />
+                    {
+                        errorMessage && <Typography variant='subtitle1' textAlign="center" mt="20px" color="error">{errorMessage}</Typography>
+                    }
                     <LoadingButton text="Save Alert" clickHandler={handleSaveAlert} disabled={saveButtonDisabled} isLoading={isLoading} styles={{ mt: "20px", width: "100%" }} />
                 </Box>
             </Container>

@@ -12,12 +12,8 @@ import { useNavigate } from 'react-router-dom';
 
 const PlayersContainer = ({ data, serverData }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time", ""], rows: [] });
-    const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);
-
-    console.log('\nplayer data = ', data);
-    
+    const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);    
     const navigate = useNavigate();
-
     const user = useSelector(state => state.user.data);
     
     useEffect(() => {

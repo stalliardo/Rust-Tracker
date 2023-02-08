@@ -2,8 +2,17 @@ import { db } from '../../firebase';
 import { doc, collection, query, where, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 
 export const createAlert = async (data) => {
-    const result = await addDoc(collection(db, "alerts"), data);
-    return {...data, id: result.id};
+
+    const q1 = query(collection(db, "alerts"), where("playerId", "==", data.playerId), where("serverId", "==", data.serverId));
+    const queryResult = await getDocs(q1);
+
+    if(queryResult.empty){
+        const result = await addDoc(collection(db, "alerts"), data);
+
+        return {...data, id: result.id};
+    } else {
+        throw Error("Error: Duplicate alert!");
+    }
 }
 
 export const getAlerts = async (userId) => {
