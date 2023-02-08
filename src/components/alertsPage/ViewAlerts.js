@@ -1,21 +1,33 @@
-import { Box, Typography, Paper } from '@mui/material'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import PageContainer from '../elements/PageContainer';
+import PageContainer from '../page/PageContainer';
+import PageTitle from '../page/PageTitle';
 
 const ViewAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
+  // const alerts = [];
 
   return (
-    // <Box component={Paper} sx={{ textAlign: "left", padding: "20px", mt: "30px" }}>
-    //   <Typography>{alerts.length ? "you have laerts" : "You have no laetsr"}</Typography>
-    // </Box>
 
-    <PageContainer>
-      Some content is here
-    </PageContainer>
+    <Box>
+      <PageTitle title="Your Alerts" color="primary" />
+      {
+        alerts.length ?
+          <PageContainer>
+
+          </PageContainer>
+          :
+          <Typography variant="subtitle1">You have no alerts saved.</Typography>
+      }
+    </Box>
 
   )
 }
 
-export default ViewAlerts
+export default ViewAlerts;
+
+// display the alerts in a table
+// options will be edit
+// clicking edit will load an edit modal and pass in the currebnt values
+// Will display the players name, server name, alerty type, notification type
