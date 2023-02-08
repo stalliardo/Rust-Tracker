@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 
 import { CircularProgress, Container } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -23,13 +23,9 @@ const App = () => {
     [mode],
   );
 
-  console.log("theme = ", theme);
+  const [isLoading, setIsLoading] = useState(true);
 
   const userDoc = useSelector((state) => state.user);
-
-  console.log('userdoc = ', userDoc);
-  
-
   const auth = getAuth();
   const dispatch = useDispatch();
 
@@ -37,12 +33,15 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         if (!userDoc.data) {
-          dispatch(getUserData(user.uid)).unwrap().catch((e) => {
+          dispatch(getUserData(user.uid)).unwrap().then(() => {
+            setIsLoading(false);
+          }).catch((e) => {
             // TODO
           })
         } 
       } else {
         dispatch(noUserFound())
+        setIsLoading(false);
       }
     })
   }, [])
@@ -54,7 +53,7 @@ const App = () => {
       <Container>
         <div className="App">
           {
-            userDoc.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress /></Container> :
+            isLoading ? <Container sx={{ mt: "100px" }}><CircularProgress /></Container> :
               <Outlet />
           }
         </div>

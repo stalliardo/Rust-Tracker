@@ -10,10 +10,12 @@ import { useSelector } from 'react-redux';
 import UserNotAuthedModel from '../modal/UserNotAuthedModel';
 import { useNavigate } from 'react-router-dom';
 
-const PlayersContainer = ({ data }) => {
+const PlayersContainer = ({ data, serverData }) => {
     const [tableData, setTableData] = useState({ head: ["Name", "Play Time", ""], rows: [] });
     const [showNotAuthedModel, setShowNotAuthedModel] = useState(false);
 
+    console.log('\nplayer data = ', data);
+    
     const navigate = useNavigate();
 
     const user = useSelector(state => state.user.data);
@@ -30,12 +32,12 @@ const PlayersContainer = ({ data }) => {
         });
 
         setTableData({ ...tableData, rows: sortByLongestPlayTimeFirst(formattedRows) });
-    }, [data]);
+    }, []);
 
     const handleAddAlert = (row) => {
         if (user) {
-            // TODO
-            console.log("user is authed");
+            // TODO -> change to site url when hosted
+            navigate(`/alerts/add/${row.id}?playerName=${row.name}&serverId=${serverData.data.id}&serverName=${serverData.data.attributes.name}`);
         } else {
             setShowNotAuthedModel(true);
         }
