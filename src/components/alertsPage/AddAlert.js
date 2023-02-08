@@ -8,6 +8,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { createAlert } from '../../services/database/alerts';
 import useAuth from '../../custom-hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { pushAlert } from '../../features/alerts/alertsSlice';
 
 const AddAlert = () => {
     const params = useParams();
@@ -32,6 +34,8 @@ const AddAlert = () => {
 
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
     const handleAlertTypeSelected = (e) => {
         setAlertType(e.target.value);
     }
@@ -42,7 +46,9 @@ const AddAlert = () => {
 
     const handleSaveAlert = () => {
         setIsLoading(true);
-        createAlert(userId, playerName, playerId, serverName, serverId, alertType, notificationType).then(() => {
+        const data = {userId, playerName, playerId, serverName, serverId, alertType, notificationType};
+        createAlert(data).then((response) => {
+            dispatch(pushAlert(response));
             navigate("/alerts");
         }).catch(e => {
             console.log("error adding alert. Error: ", e);

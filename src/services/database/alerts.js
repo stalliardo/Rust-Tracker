@@ -1,21 +1,12 @@
 import { db } from '../../firebase';
-import { doc, setDoc, getDoc, collection, query, where, getDocs, addDoc, updateDoc } from 'firebase/firestore'
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { doc, collection, query, where, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore'
 
-export const createAlert = (userId, playerName, playerId, serverName, serverId, alertType, notificationType) => {
-    return addDoc(collection(db, "alerts"), {
-        userId,
-        playerName,
-        playerId,
-        serverName,
-        serverId,
-        alertType,
-        notificationType
-    });
+export const createAlert = async (data) => {
+    const result = await addDoc(collection(db, "alerts"), data);
+    return {...data, id: result.id};
 }
 
 export const getAlerts = async (userId) => {
-    // query for all where userId is equal to arg
     const q = query(collection(db, "alerts"), where("userId", "==", userId));
     const querySnapshot = await getDocs(q);
 
@@ -34,4 +25,8 @@ export const updateAlert = (alertType, notificationType, alertId) => {
        alertType,
        notificationType 
     });
+}
+
+export const deleteAlert = (alertId) => {
+    return deleteDoc(doc(db, "alerts", alertId));
 }

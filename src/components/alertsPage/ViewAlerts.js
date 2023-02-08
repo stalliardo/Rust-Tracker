@@ -8,8 +8,8 @@ import { truncateString } from '../../utils/stringUtils';
 import useModal from '../../custom-hooks/useModal';
 import EditAlertModal from '../modal/EditAlertModal';
 import ExtendableModal from '../modal/extendableModal/ExtendableModal';
-import { updateAlert } from '../../services/database/alerts';
-import { updateAlertItem } from '../../features/alerts/alertsSlice';
+import { deleteAlert, updateAlert } from '../../services/database/alerts';
+import { deleteAlertItem, updateAlertItem } from '../../features/alerts/alertsSlice';
 
 const ViewAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
@@ -24,7 +24,6 @@ const ViewAlerts = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log("alerts = ", alerts);
     const formattedAlerts = [];
 
     alerts.forEach((alert) => {
@@ -52,47 +51,40 @@ const ViewAlerts = () => {
   }
 
   const handleConfirmEdit = () => {
-    console.log("confirm edit called");
-    // call the updateALert function.
-    // Then => update/replace the local copy
-    console.log("edit values = ", editedValues);
-    console.log("alertId = ", selectedAlert.id);
-
-
-
-
-    
-
-
-
     updateAlert(editedValues.alertType, editedValues.notificationType, selectedAlert.id).then(() => {
-      dispatch(updateAlertItem({id: selectedAlert.id, alertType: editedValues.alertType, notificationType: editedValues.notificationType}));
+      dispatch(updateAlertItem({ id: selectedAlert.id, alertType: editedValues.alertType, notificationType: editedValues.notificationType }));
       handleClose();
     }).catch(e => {
       console.log("An error occured while updating the doc. Error: ", e);
     })
+  }
 
+  const handleDeleteAlert = (row) => {
+    const confirmation = window.confirm("Are you sure you want to delete this alert?");
 
-
-
+    if (confirmation) {
+      deleteAlert(row.id).then(() => {
+        dispatch(deleteAlertItem(row.id));
+      })
+    }
   }
 
   return (
-
     <Box>
       <PageTitle title="Your Alerts" color="primary" />
       {
         alerts.length ?
           <PageContainer>
-            <ExtendableTable 
-              data={tableData} 
-              editButton={true} 
-              deleteButton={true} 
-              deleteButtonTooltipText="Delete Alert" 
+            <ExtendableTable
+              data={tableData}
+              editButton={true}
+              deleteButton={true}
+              deleteButtonTooltipText="Delete Alert"
+              handleDelete={handleDeleteAlert}
               editButtonTooltipText="Edit Alert"
               handleEdit={handleEdit}
               rowClickingDisabled={true}
-              
+
             />
           </PageContainer>
           :
@@ -109,7 +101,7 @@ const ViewAlerts = () => {
           minHeight="200px"
           confirmButtonDisabled={editSaveButtonDisabled}
         >
-          <EditAlertModal alertData={selectedAlert} onChange={handleEditValuesChanged}/>
+          <EditAlertModal alertData={selectedAlert} onChange={handleEditValuesChanged} />
         </ExtendableModal>
       }
     </Box>
@@ -118,8 +110,3 @@ const ViewAlerts = () => {
 }
 
 export default ViewAlerts;
-
-// display the alerts in a table
-// options will be edit
-// clicking edit will load an edit modal and pass in the currebnt values
-// Will display the players name, server name, alerty type, notification type

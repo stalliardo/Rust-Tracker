@@ -10,30 +10,23 @@ export const alertsSlice = createSlice({
             state.data = action.payload;
         },
         updateAlertItem: (state, action) => {
-            // how to update an item in an array...
-            // find the index then use that to chnage it
-
-            console.log("action data = ", action.payload);
             const index = state.data.findIndex(item => item.id === action.payload.id);
 
             if(index >= 0) {
                 state.data[index].alertType = action.payload.alertType
                 state.data[index].notificationType = action.payload.notificationType
             }
-            console.log("index = ", index);
+        },
+        deleteAlertItem: (state, action) => {
+            state.data = state.data.filter(alert => alert.id !== action.payload);
+        },
+        pushAlert: (state, action) => {
+            state.data.push(action.payload);
         }
-
-       
     },
-    // extraReducers: (builder) => {
-    //     builder.addCase(signUpUser.pending, (state) => {
-    //         state.isLoading = true;
-    //     });
-
-    // }
 })
 
-export const { setAlerts, updateAlertItem } = alertsSlice.actions;
+export const { setAlerts, updateAlertItem, deleteAlertItem, pushAlert } = alertsSlice.actions;
 
 
 export default alertsSlice.reducer
