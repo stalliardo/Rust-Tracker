@@ -32,13 +32,7 @@ const App = () => {
   const auth = getAuth();
   const dispatch = useDispatch();
 
-  console.log("userDoc = ", userDoc);
-
   const alerts = useSelector(state => state.alerts.data);
-
-  
-
-
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -58,7 +52,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    if(!isLoading){
+    if (!isLoading) {
       if (userDoc.data && !alerts.length) {
         getAlerts(userDoc.data.id).then((res) => {
           dispatch(setAlerts(res));
@@ -72,35 +66,31 @@ const App = () => {
   }, [isLoading]);
 
   useEffect(() => {
-    // alos, only run this if the user has alerts saved
+    // TODO -> only run this if the user has alerts saved
     if (userDoc.data && userDoc.data.username === "Admin" && alerts.length) {
+      const interval = setInterval(() => {
+        console.log('%cInvoking the refreshPlayerStatus function now...', "color: yellow;");
 
-      console.log("yes this is the admin");
+        // checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
+        //   console.log("response = ", response);
+        //   if (response.data.data) {
+        //     console.log("an update must of happened");
+        //     configureNotificationsForAlerts(response.data.data, alerts)
+        //   }
+        // }).catch(e => {
+        //   console.log("error getting the player status. Error: ", e);
+        // })
 
-      // setInterval(() => {
-      //   console.log("INTERVAL CALLED");
-      //   checkForPlayerStatusUpdate().then((response) => {
-      //     console.log("response = ", response);
-      //   }).catch(e => {
-      //     console.log("error getting the player status. Error: ", e);
-      //   })
-      // }, [60000]);
+      }, 10000);
 
-      // TODO test and enable the interval
+      return () => {
+        console.log('interval cleared');
 
-  //     checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
-  //       console.log("response = ", response);
-  //       if(response.data.data){
-  //         console.log("an update must of happened");
-  //         configureNotificationsForAlerts(response.data.data, alerts)
-  //       }
-  //     }).catch(e => {
-  //       console.log("error getting the player status. Error: ", e);
-  //     })
+        clearInterval(interval);
+      }
     }
-  }, [userDoc, alerts])
-
-
+  }, [alerts]);
+  
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
