@@ -50,6 +50,7 @@ const RegisteredUserActions = ({ serverData }) => {
         })
     }
 
+    // TODO - remove
     const handleCreateServerAlerts = () => {
         if (isAuthenticated) {
             // Create server alerts
@@ -57,6 +58,7 @@ const RegisteredUserActions = ({ serverData }) => {
             console.log("calling the refreshPLayerSttaus function....\n");
 
             // test calling the refreshPlayerStatus function on the backend
+            // TODO remove...
             checkForPlayerStatusUpdate().then((response) => {
                 console.log("response from backend = ", response);
             })

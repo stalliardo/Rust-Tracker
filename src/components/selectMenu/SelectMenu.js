@@ -17,7 +17,7 @@ const SelectMenu = ({value, label, name, handleChange, menuItems, defaultValue =
                     required={required}
                 >
                     {menuItems.map((item, index) => (
-                        <MenuItem value={item} key={index} sx={{"&:hover": {backgroundColor: "lightgrey"}}}>
+                        <MenuItem value={item} key={index} sx={{"&:hover": {backgroundColor: "background.secondary"}}}>
                             {item}
                         </MenuItem>
                     ))}
