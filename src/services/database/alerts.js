@@ -7,7 +7,10 @@ export const createAlert = async (data) => {
     const queryResult = await getDocs(q1);
 
     if(queryResult.empty){
-        const result = await addDoc(collection(db, "alerts"), data);
+        const result = await addDoc(collection(db, "alerts"), {
+            ...data,
+            isOnline: true
+        });
 
         return {...data, id: result.id};
     } else {
@@ -22,7 +25,6 @@ export const getAlerts = async (userId) => {
     const data = [];
 
     querySnapshot.forEach((snapshot) => {
-        console.log("snapshot = ", snapshot.data());
         data.push({...snapshot.data(), id: snapshot.id});
     });
 

@@ -32,6 +32,8 @@ const AddAlert = () => {
 
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [permissionsGranted, setPermissionsGranted] = useState(false);
+
     const {id: userId} = useAuth();
 
     const navigate = useNavigate();
@@ -40,6 +42,7 @@ const AddAlert = () => {
 
     const handleAlertTypeSelected = (e) => {
         setAlertType(e.target.value);
+        
     }
 
     const handleNotificationTypeSelected = (e) => {
@@ -65,8 +68,29 @@ const AddAlert = () => {
     }
 
     useEffect(() => {
-        setSaveButtonDisabled(notificationType === "" || alertType === "");
-    }, [notificationType, alertType]);
+        if(notificationType === "Browser push notification") {
+            setSaveButtonDisabled(notificationType === "" || alertType === "" || !permissionsGranted);
+        } else {
+            setSaveButtonDisabled(notificationType === "" || alertType === "");
+        }
+    }, [notificationType, alertType, permissionsGranted]);
+
+    useEffect(() => {
+        if(notificationType === "Browser push notification") {
+
+            if(Notification.permission !== "granted") {
+                Notification.requestPermission().then(permission => {
+                     if(permission ===  "granted"){
+                        setPermissionsGranted(true);
+                     } else {
+                        setPermissionsGranted(false);
+                     }
+                })
+            } else {
+                setPermissionsGranted(true);
+            }
+        }
+    }, [notificationType])
 
     return (
         <Box>
@@ -106,3 +130,7 @@ const AddAlert = () => {
 }
 
 export default AddAlert;
+
+// TODO 
+    // Need to prompt users to test the browser notiifcation to make sure they have it all set up on ther end. Ill do this
+    // in a new modal called testBrowserPushNotifications
