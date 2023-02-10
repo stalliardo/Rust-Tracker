@@ -1,5 +1,5 @@
 import { db } from '../../firebase';
-import { getDocs, collection, query, where, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { getDocs, collection, query, where, updateDoc, doc, deleteDoc, addDoc } from 'firebase/firestore';
 
 export const checkInvitations = async (recipientId) => {
     const q = query(collection(db, "invitations"), where("recipientId", "==", recipientId));
@@ -38,4 +38,16 @@ export const declineInvite = async (inviteId) => {
     return await updateDoc(inviteRef, {
         status: "Declined"
     });   
+}
+
+export const addNotification = async (userId, notificationData) => {
+    const notificationRef = collection(db, "users", userId, "notifications");
+    const {playerName, serverName, alertType} = notificationData;
+
+    return addDoc(notificationRef, {
+        playerName,
+        serverName,
+        alertType,
+        createdAt: new Date()
+    });
 }

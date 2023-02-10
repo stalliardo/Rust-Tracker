@@ -4,6 +4,7 @@ export const alertsSlice = createSlice({
     name: 'alerts',
     initialState: {
         data: [],
+        notifications: [],
     },
     reducers: {
         setAlerts: (state, action) => {

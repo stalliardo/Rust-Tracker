@@ -10,6 +10,7 @@ import EditAlertModal from '../modal/EditAlertModal';
 import ExtendableModal from '../modal/extendableModal/ExtendableModal';
 import { deleteAlert, updateAlert } from '../../services/database/alerts';
 import { deleteAlertItem, updateAlertItem } from '../../features/alerts/alertsSlice';
+import NotificationCount from './NotificationCount';
 
 const ViewAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
@@ -75,6 +76,7 @@ const ViewAlerts = () => {
       {
         alerts.length ?
           <PageContainer>
+            <NotificationCount />
             <ExtendableTable
               data={tableData}
               editButton={true}

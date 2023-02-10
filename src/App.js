@@ -75,13 +75,13 @@ const App = () => {
         //   console.log("response = ", response);
         //   if (response.data.data) {
         //     console.log("an update must of happened");
-        //     configureNotificationsForAlerts(response.data.data, alerts)
+        //     configureNotificationsForAlerts(response.data.data, alerts, userDoc.data.id);
         //   }
         // }).catch(e => {
         //   console.log("error getting the player status. Error: ", e);
         // })
 
-      }, 10000);
+      }, 30000);
 
       return () => {
         console.log('interval cleared');
