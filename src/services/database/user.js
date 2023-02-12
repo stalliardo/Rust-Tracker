@@ -51,3 +51,16 @@ export const addNotification = async (userId, notificationData) => {
         createdAt: new Date()
     });
 }
+
+export const getAlertNotifications = async (userId) => {
+    const snapshot = await getDocs(collection(db, "users", userId, "alerts" ));
+
+    if(!snapshot.empty){
+        snapshot.forEach((snap) => {
+            console.log('data from get alert notifications = ', snap.data());
+            
+        })
+    }
+
+
+}

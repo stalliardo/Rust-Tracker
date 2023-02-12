@@ -7,6 +7,7 @@ export const userSlice = createSlice({
         data: null,
         servers: [],
         isLoading: false,
+        alertNotifications: [],
     },
     reducers: {
         setUser: (state, action) => {

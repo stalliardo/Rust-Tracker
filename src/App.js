@@ -15,7 +15,7 @@ import { getPallete } from './theme/Theme';
 import { getUserData, noUserFound } from './features/user/userSlice';
 import { checkForPlayerStatusUpdate, configureNotificationsForAlerts } from './services/backend/functions';
 
-import { setAlerts } from './features/alerts/alertsSlice';
+import { setAlerts, updateIsOnlineProperty } from './features/alerts/alertsSlice';
 import { getAlerts } from './services/database/alerts';
 
 const App = () => {
@@ -55,6 +55,8 @@ const App = () => {
     if (!isLoading) {
       if (userDoc.data && !alerts.length) {
         getAlerts(userDoc.data.id).then((res) => {
+          console.log('res from get alerts. ', res);
+          
           dispatch(setAlerts(res));
         }).finally(() => {
           setIsLoading(false);
@@ -70,22 +72,17 @@ const App = () => {
     if (userDoc.data && userDoc.data.username === "Admin" && alerts.length) {
       const interval = setInterval(() => {
         console.log('%cInvoking the refreshPlayerStatus function now...', "color: yellow;");
-
-        // checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
-        //   console.log("response = ", response);
-        //   if (response.data.data) {
-        //     console.log("an update must of happened");
-        //     configureNotificationsForAlerts(response.data.data, alerts, userDoc.data.id);
-        //   }
-        // }).catch(e => {
-        //   console.log("error getting the player status. Error: ", e);
-        // })
-
-      }, 30000);
+        checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
+          if (response.data.data) {
+            configureNotificationsForAlerts(response.data.data, alerts, userDoc.data.id, dispatch);
+          }
+        }).catch(e => {
+          console.log("error getting the player status. Error: ", e);
+        });
+      }, 60000);
 
       return () => {
         console.log('interval cleared');
-
         clearInterval(interval);
       }
     }
