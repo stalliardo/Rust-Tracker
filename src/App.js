@@ -79,7 +79,7 @@ const App = () => {
         }).catch(e => {
           console.log("error getting the player status. Error: ", e);
         });
-      }, 60000);
+      }, 60000); // TODO -> set this via the users/Admin refreshPlayerStatusInvocationFrequency prop
 
       return () => {
         console.log('interval cleared');
