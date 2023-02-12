@@ -73,7 +73,10 @@ const App = () => {
       const interval = setInterval(() => {
         console.log('%cInvoking the refreshPlayerStatus function now...', "color: yellow;");
         checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
+          // TODO remove comment below
+          console.log('data from freshPlayerStatsus = ', response.data);
           if (response.data.data) {
+            
             configureNotificationsForAlerts(response.data.data, alerts, userDoc.data.id, dispatch);
           }
         }).catch(e => {
