@@ -14,9 +14,10 @@ import Server from './routes/Server';
 import SignOut from './routes/SignOut';
 import AddedServers from './routes/AddedServers';
 import Alerts from './routes/Alerts';
-import ViewAlerts from './components/alertsPage/ViewAlerts';
+import ViewAlerts from './components/alertsPage/ViewActiveAlerts';
 import EditAlert from './components/alertsPage/EditAlert';
 import AddAlert from './components/alertsPage/AddAlert';
+import ViewAlertNotifications from './components/alertsPage/ViewAlertNotification';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -42,6 +43,7 @@ root.render(
               <Route index element={<PageNotFound />} />
               <Route path=":playerId" element={<AddAlert />} />
             </Route>
+            <Route path="view" element={<ViewAlertNotifications />}/>
           </Route>
           <Route path="servers" element={<AddedServers />} />
         </Route>
