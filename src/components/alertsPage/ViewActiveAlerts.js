@@ -10,8 +10,9 @@ import EditAlertModal from '../modal/EditAlertModal';
 import ExtendableModal from '../modal/extendableModal/ExtendableModal';
 import { deleteAlert, updateAlert } from '../../services/database/alerts';
 import { deleteAlertItem, updateAlertItem } from '../../features/alerts/alertsSlice';
+import NotificationCount from './NotificationCount';
 
-const ViewAlerts = () => {
+const ViewActiveAlerts = () => {
   const alerts = useSelector(state => state.alerts.data);
   const [tableData, setTableData] = useState({ head: ["Player Name", "Server Name", "Alert Type", "Notification Type", "Actions"], rows: [] });
 
@@ -71,10 +72,11 @@ const ViewAlerts = () => {
 
   return (
     <Box>
-      <PageTitle title="Your Alerts" color="primary" />
+      <PageTitle title="Your Active Alerts" color="primary" />
       {
         alerts.length ?
           <PageContainer>
+            <NotificationCount />
             <ExtendableTable
               data={tableData}
               editButton={true}
@@ -109,4 +111,4 @@ const ViewAlerts = () => {
   )
 }
 
-export default ViewAlerts;
+export default ViewActiveAlerts;

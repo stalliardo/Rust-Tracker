@@ -12,7 +12,7 @@ export const createAlert = async (data) => {
             isOnline: true
         });
 
-        return {...data, id: result.id};
+        return {...data, id: result.id, isOnline: true};
     } else {
         throw Error("Error: Duplicate alert!");
     }

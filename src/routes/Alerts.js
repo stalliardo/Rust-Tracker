@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import useAuth from '../custom-hooks/useAuth';
 import { setAlerts } from '../features/alerts/alertsSlice';
 import { getAlerts } from '../services/database/alerts';
-import ViewAlerts from '../components/alertsPage/ViewAlerts';
+import ViewActiveAlerts from '../components/alertsPage/ViewActiveAlerts';
 
 const Alerts = () => {
 
@@ -25,7 +25,7 @@ const Alerts = () => {
     }
   }, []);
 
-  return !isLoading && <ViewAlerts />
+  return !isLoading && <ViewActiveAlerts />
 }
 
 export default Alerts;

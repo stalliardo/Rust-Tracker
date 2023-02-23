@@ -7,6 +7,7 @@ export const userSlice = createSlice({
         data: null,
         servers: [],
         isLoading: false,
+        alertNotifications: [],
     },
     reducers: {
         setUser: (state, action) => {
@@ -34,7 +35,10 @@ export const userSlice = createSlice({
             if(index >=0 ) {
                 state.servers[index].notes = action.payload.notes
             }
-        }
+        },
+        setAlertNotifications: (state, action) => {
+            state.alertNotifications = action.payload;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(signUpUser.pending, (state) => {
@@ -62,7 +66,7 @@ export const userSlice = createSlice({
     }
 })
 
-export const { setUser, noUserFound, addServerToArray, removeServer, updateNotes } = userSlice.actions;
+export const { setUser, noUserFound, addServerToArray, removeServer, updateNotes, setAlertNotifications } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
