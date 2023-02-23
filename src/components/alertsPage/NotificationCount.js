@@ -21,8 +21,6 @@ const NotificationCount = () => {
   }, []);
 
   const onViewAlerts = () => {
-    console.log("view clicked");
-    // TODO navigate to the view alerts section
     navigate("view");
   }
 
@@ -34,6 +32,3 @@ const NotificationCount = () => {
 }
 
 export default NotificationCount;
-
-// TODO
-  // Format the text to show notifications have been added
