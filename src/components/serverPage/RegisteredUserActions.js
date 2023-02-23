@@ -11,14 +11,13 @@ import useAuth from '../../custom-hooks/useAuth';
 
 import { addServer, deleteServer, updateServer } from '../../services/database/rustServers';
 import { addServerToArray, removeServer, updateNotes } from '../../features/user/userSlice';
-import { checkForPlayerStatusUpdate } from '../../services/backend/functions';
 
 const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
     const { isAuthenticated, id: userId } = useAuth();
 
     const serverDataFromState = useSelector(state => state.user.servers.find(server => server.id === serverData.id));
-    const [notes, setNotes] = useState(serverDataFromState.notes || ""); // This is the array not the singular item
+    const [notes, setNotes] = useState(serverDataFromState?.notes || "");
     const [showEditNote, setShowEditNote] = useState(false);
     const [notesButtonDisabled, setNotesButtonDisabled] = useState(true);
 
@@ -53,15 +52,7 @@ const RegisteredUserActions = ({ serverData }) => {
     // TODO - remove
     const handleCreateServerAlerts = () => {
         if (isAuthenticated) {
-            // Create server alerts
-
-            console.log("calling the refreshPLayerSttaus function....\n");
-
-            // test calling the refreshPlayerStatus function on the backend
-            // TODO remove...
-            checkForPlayerStatusUpdate().then((response) => {
-                console.log("response from backend = ", response);
-            })
+            // TODO
         } else {
             handleOpen();
         }
@@ -132,13 +123,15 @@ const RegisteredUserActions = ({ serverData }) => {
                 </Box>
             }
             {
-                !showEditNote &&
-                <Box>
-                    <Typography variant='h6' color="primary" mt="20px">Notes</Typography>
-                    <Typography variant='subtitle1'>{serverDataFromState.notes}</Typography>
-                    <Button variant="contained" sx={{ width: "40%", mt: "10px" }} onClick={handleEditNote} >Edit Note</Button>
-                </Box>
-            }
+                serverDataFromState && 
+                    !showEditNote &&
+                    <Box>
+                        <Typography variant='h6' color="primary" mt="20px">Notes</Typography>
+                        <Typography variant='subtitle1'>{serverDataFromState.notes}</Typography>
+                        <Button variant="contained" sx={{ width: "40%", mt: "10px" }} onClick={handleEditNote} >Edit Note</Button>
+                    </Box>
+                }
+            
         </Box>
     )
 };
