@@ -18,7 +18,7 @@ const ServerPageContainer = ({ serverData }) => {
                     <ServerActions data={serverData.data} />
                 </Grid>
             </Grid>
-            <PlayersContainer data={serverData.included}/>
+            <PlayersContainer data={serverData.included} serverData={serverData}/>
         </Box>
     )
 }

@@ -47,7 +47,6 @@ export const getUserDoc = async (userId) => {
         const serverData = [];
 
         serverSnapshot.forEach((doc) => {
-            console.log('server data = ', doc.data());
             serverData.push({...doc.data(), id: doc.id});
         });
 

@@ -17,8 +17,8 @@ const RegisteredUserActions = ({ serverData }) => {
     const { isOpen, handleOpen, handleClose } = useModal();
     const { isAuthenticated, id: userId } = useAuth();
 
-    const serverDataFromState = useSelector(state => state.user.servers.find(server => server.id === serverData.id));
-    const [notes, setNotes] = useState(serverDataFromState.notes || ""); // This is the array not the singular item
+    const serverDataFromState = useSelector(state => state.user.servers.find(server => server.id === serverData.id) || []);
+    const [notes, setNotes] = useState(serverDataFromState?.notes || []); // This is the array not the singular item
     const [showEditNote, setShowEditNote] = useState(false);
     const [notesButtonDisabled, setNotesButtonDisabled] = useState(true);
 
@@ -50,6 +50,7 @@ const RegisteredUserActions = ({ serverData }) => {
         })
     }
 
+    // TODO - remove
     const handleCreateServerAlerts = () => {
         if (isAuthenticated) {
             // Create server alerts
@@ -57,6 +58,7 @@ const RegisteredUserActions = ({ serverData }) => {
             console.log("calling the refreshPLayerSttaus function....\n");
 
             // test calling the refreshPlayerStatus function on the backend
+            // TODO remove...
             checkForPlayerStatusUpdate().then((response) => {
                 console.log("response from backend = ", response);
             })

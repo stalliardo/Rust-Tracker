@@ -1,6 +1,6 @@
 import './App.css';
 
-import { useMemo, useEffect } from 'react';
+import { useMemo, useEffect, useState } from 'react';
 
 import { CircularProgress, Container } from '@mui/material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -13,9 +13,12 @@ import Navbar from './components/navbar/Navbar';
 
 import { getPallete } from './theme/Theme';
 import { getUserData, noUserFound } from './features/user/userSlice';
+import { checkForPlayerStatusUpdate, configureNotificationsForAlerts } from './services/backend/functions';
+
+import { setAlerts } from './features/alerts/alertsSlice';
+import { getAlerts } from './services/database/alerts';
 
 const App = () => {
-  
   const mode = useSelector(state => state.theme.colorMode);
   const theme = useMemo(
     () =>
@@ -23,30 +26,71 @@ const App = () => {
     [mode],
   );
 
-  console.log("theme = ", theme);
+  const [isLoading, setIsLoading] = useState(true);
 
   const userDoc = useSelector((state) => state.user);
-
-  console.log('userdoc = ', userDoc);
-  
-
   const auth = getAuth();
   const dispatch = useDispatch();
+
+  const alerts = useSelector(state => state.alerts.data);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         if (!userDoc.data) {
-          dispatch(getUserData(user.uid)).unwrap().catch((e) => {
+          dispatch(getUserData(user.uid)).unwrap().then(() => {
+            setIsLoading(false);
+          }).catch((e) => {
             // TODO
           })
-        } 
+        }
       } else {
         dispatch(noUserFound())
+        setIsLoading(false);
       }
     })
   }, [])
 
+  useEffect(() => {
+    if (!isLoading) {
+      if (userDoc.data && !alerts.length) {
+        getAlerts(userDoc.data.id).then((res) => {
+          dispatch(setAlerts(res));
+        }).finally(() => {
+          setIsLoading(false);
+        });
+      } else {
+        setIsLoading(false);
+      }
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    // TODO -> only run this if the user has alerts saved
+    if (userDoc.data && userDoc.data.username === "Admin" && alerts.length) {
+      const interval = setInterval(() => {
+        console.log('%cInvoking the refreshPlayerStatus function now...', "color: yellow;");
+
+        // checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
+        //   console.log("response = ", response);
+        //   if (response.data.data) {
+        //     console.log("an update must of happened");
+        //     configureNotificationsForAlerts(response.data.data, alerts)
+        //   }
+        // }).catch(e => {
+        //   console.log("error getting the player status. Error: ", e);
+        // })
+
+      }, 10000);
+
+      return () => {
+        console.log('interval cleared');
+
+        clearInterval(interval);
+      }
+    }
+  }, [alerts]);
+  
   return (
     <ThemeProvider theme={theme}>
       <Navbar />
@@ -54,7 +98,7 @@ const App = () => {
       <Container>
         <div className="App">
           {
-            userDoc.isLoadingUserData ? <Container sx={{ mt: "100px" }}><CircularProgress /></Container> :
+            isLoading ? <Container sx={{ mt: "100px" }}><CircularProgress /></Container> :
               <Outlet />
           }
         </div>

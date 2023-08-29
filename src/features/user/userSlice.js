@@ -7,7 +7,6 @@ export const userSlice = createSlice({
         data: null,
         servers: [],
         isLoading: false,
-        isLoadingUserData: false,
     },
     reducers: {
         setUser: (state, action) => {
@@ -55,20 +54,11 @@ export const userSlice = createSlice({
             state.isLoading = false;
         });
 
-        builder.addCase(getUserData.pending, (state) => {
-            state.isLoadingUserData = true;
-        });
-
         builder.addCase(getUserData.fulfilled, (state, action) => {
-            state.isLoadingUserData = false;
             state.servers = action.payload.serverData;
             delete action.payload.serverData;
             state.data = action.payload;
-        });
-
-        builder.addCase(getUserData.rejected, (state) => {
-            state.isLoadingUserData = false;
-        });
+        });        
     }
 })
 
