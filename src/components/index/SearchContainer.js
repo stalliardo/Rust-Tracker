@@ -42,7 +42,7 @@ const SearchContainer = () => {
         <Box component={Paper} sx={{ textAlign: "left", padding: "20px" }}>
             <form onSubmit={onSubmit}>
                 <Typography variant="subtitle1">Search Servers</Typography>
-                <TextField onChange={handleChange} fullWidth />
+                <TextField onChange={handleChange} fullWidth placeholder='eg, rusty moose'/>
                 <LoadingButton type="submit" styles={{ mt: "10px", width: "100px" }} text="Search" isLoading={searchIsLoading} disabled={searchButtonDisabled} />
             </form>
 
