@@ -1,166 +1,115 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
-import { logOut } from '../../features/user/userSlice';
+import { Box, Container, Paper, IconButton, Toolbar, Typography } from '@mui/material';
 
-import { Avatar, Menu, MenuItem, Tooltip, AppBar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemText, ListItemButton, Toolbar, Typography, Button } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import Badge from '@mui/material/Badge';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
-const navItemsMobile = ['Home', 'Members', 'Plot Data', 'About', 'Contact', 'Profile', 'Settings', 'Sign Out'];
-const navItemsDesktop = ['Home', 'Members', 'Plot Data', 'About', 'Contact'];
-const settings = ['Profile', 'Settings', 'Sign Out'];
+import { toggleColorMode } from '../../features/theme/themeSlice';
+
+import rustLogo from '../../images/rustLogo.png';
+import useAuth from '../../custom-hooks/useAuth';
+
+const desktopNavItems = ['Servers', 'Alerts', 'About', 'Contact', 'Sign In', 'Sign Out'];
 
 const Navbar = (props) => {
-  const [mobileOpen, setMobileOpen] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [anchorElNotiification, setAnchorElNotification] = useState(null);
-
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const user = useAuth();
+  
+  const colorMode = useSelector((state) => state.theme.colorMode);
 
-  const userDoc = useSelector((state) => state.user.currentUser);
+  const toggleTheme = () => {
+    dispatch(toggleColorMode())
+  }
 
- 
+  const filterAuthenticatedNavItems = (navItem) => {
+    const activeLinkStyle = {
+      textDecoration: "none",
+      color: "orange"
+    }
 
-  const extractInitials = (name) => {
-    const names = name.split(" ");
-    const initials = names.shift().charAt(0) + names.pop().charAt(0);
+    const inActiveStyle = {
+      color: colorMode === "dark" ? "white" : "black"
+    }
 
-    return initials;
-  };
+    let formattedLink = "";
 
-  const handleCloseUserMenu = (link) => {
-    if (link === "Settings" || "Profile" || "Sign Out") {
-      if (link === "Sign Out") {
-        dispatch(logOut())
-        navigate("/");
-      } else {
-        navigate(link)
+    switch(navItem) {
+      case "Sign In" : {
+        formattedLink = "auth"
+        break;
       }
+      case "Sign Out" : {
+        formattedLink = "sign-out"
+        break;
+      }
+
+      default: formattedLink = navItem;
     }
-    setAnchorElUser(null);
-  };
 
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
-  };
+    if (user && navItem === "Sign In") return null;
+    if (!user && navItem === "Sign Out") return null;
+    if (!user && navItem === "Servers") return null;
+    if (!user && navItem === "Alerts") return null;
 
+    return (
+      <NavLink
+        key={navItem}
+        to={formattedLink}
+        style={({ isActive }) =>
+          isActive ? activeLinkStyle : inActiveStyle
+        }
+      >
+        {navItem}
+      </NavLink>
+    )
+  }
 
-
-
-  const handleNavItemClicked = (link) => {
-    if (link === "Sign Out") {
-      dispatch(logOut());
-      navigate("/");
-    }
-    if (link === "Plot Data") {
-      navigate("plot-data");
-    }
-    else if (link === "Home") {
-      navigate("/");
-    } else {
-      navigate(link);
-    }
-  };
-
-
-
-  // const drawer = (
-  //   <Box onClick={handleDrawerToggle} sx={{ pt: "20px", background: "linear-gradient(131deg, rgba(1,179,217,1) 0%, rgba(3,2,74,1) 100%)", height: "100vh" }}>
-  //     <Box sx={{ display: "flex", alignItems: "center", pl: "10px" }}>
-  //       {userDoc ? <Avatar sx={{ bgcolor: "primary.light", height: "60px", width: "60px" }}>{extractInitials(userDoc.name)}</Avatar> : null}
-  //       {userDoc ? <Typography variant='p' color="white" ml="20px" fontSize="14px" letterSpacing="2px">{userDoc.name}</Typography> : null}
-  //     </Box>
-
-  //     <Divider color="white" sx={{ mt: "20px" }} />
-  //     <List>
-  //       {navItemsMobile.map((item, index) => {
-  //         return (
-  //           <div key={`div ${item}`}>
-  //             <ListItem key={item} disablePadding sx={{ color: "white", letterSpacing: "2px" }}>
-  //               <ListItemButton onClick={() => handleNavItemClicked(item)}>
-  //                 <ListItemText primary={item} />
-  //               </ListItemButton>
-  //             </ListItem>
-  //             {item === "Contact" ? <Divider key={`divider ${item}`} color="white" /> : null}
-  //           </div>
-  //         )
-  //       })}
-  //     </List>
-  //   </Box>
-  // );
+  const handleLogoClicked = () => {
+    navigate("/");
+  }
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      
-      <AppBar component="nav" position='static'>
+    <Box component={Paper}>
+      <Container maxWidth="lg" disableGutters>
         <Toolbar>
-          {/* {userDoc ? <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="start"
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { xs: 'block', md: "none" } }}
-          >
-            <MenuIcon />
-          </IconButton> 
-          : null} */}
-          <Typography
-            variant="h6"
-            component="div"
-            fontFamily="Russo One"
-            letterSpacing="2px"
-            sx={{ flexGrow: 0, display: "block" }}
-          >
-            Rust name TBC
-          </Typography>
-
-          <Box sx={{ display: { xs: 'none', md: 'block' }, flexGrow: 1, ml: "30px", mt: "8px" }}>
-            {userDoc ? navItemsDesktop.map((item) => (
-              <Button key={item} sx={{ color: "white", fontSize: "12px" }} onClick={() => handleNavItemClicked(item)}>
-                {item}
-              </Button>
-            )) : null}
+          <Box sx={{ flexGrow: 1, display: "flex", height: "70px" }} >
+            <Box sx={{ display: "flex", alignItems: "center", ":hover": { cursor: "pointer" } }} onClick={handleLogoClicked}>
+              <img src={rustLogo} height={50} alt="rust icon" />
+              <Typography
+                variant="h6"
+                component="div"
+                letterSpacing="2px"
+                color="primary"
+                sx={{ flexGrow: 0, display: "block", ml: "20px" }}
+              >
+                Rust Tracker
+              </Typography>
+            </Box>
           </Box>
-
+          <Box sx={{ display: { xs: 'none', md: 'block' }, mt: "8px" }}>
+            {
+              desktopNavItems.map((item) => (
+                filterAuthenticatedNavItems(item)
+              ))
+            }
+            {
+              user &&
+              <Typography fontWeight="bold" variant='subtitle1' display="inline" color="primary" ml="10px">{user.username}</Typography>
+            }
+          </Box>
           <Box sx={{ display: { xs: 'none', md: "block" }, flexGrow: 0 }}>
-           
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {userDoc ? <Avatar sx={{ bgcolor: "primary.main", height: "50px", width: "50px", letterSpacing: "2px" }}>{extractInitials(userDoc.name)}</Avatar> : null}
-              </IconButton>
-            </Tooltip>
-
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} divider={true} onClick={() => handleCloseUserMenu(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu> 
+            <IconButton onClick={toggleTheme}>
+              {colorMode === "dark" ? <Brightness7Icon /> : <Brightness4Icon />}
+            </IconButton>
           </Box>
         </Toolbar>
-      </AppBar>
+      </Container>
     </Box>
   )
 }

@@ -4,13 +4,13 @@ import { signUpUserWithEmailAndPassword, getUserDoc, logUserOut, signInUserWithE
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        currentUser: null,
+        data: null,
+        servers: [],
         isLoading: false,
-        isLoadingUserData: true,
     },
     reducers: {
         setUser: (state, action) => {
-            state.currentUser = action.payload;
+            state.data = action.payload;
         },
 
         noUserFound: (state, action) => {
@@ -18,8 +18,23 @@ export const userSlice = createSlice({
         },
 
         setGangId: (state, action) => {
-            state.currentUser = {...state.currentUser, gangId: action.payload}
+            state.data = {...state.data, gangId: action.payload}
         },
+
+        addServerToArray: (state, action) => {            
+            state.servers.push(action.payload);
+        },
+
+        removeServer: (state, action) => {
+            state.servers = state.servers.filter(server => server.id !== action.payload);
+        },
+
+        updateNotes: (state, action) => {
+            const index = state.servers.findIndex(server => server.id === action.payload.serverId);
+            if(index >=0 ) {
+                state.servers[index].notes = action.payload.notes
+            }
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(signUpUser.pending, (state) => {
@@ -28,7 +43,7 @@ export const userSlice = createSlice({
 
         builder.addCase(signUpUser.fulfilled, (state, action) => {
             state.isLoading = false;
-            state.currentUser = action.payload;
+            state.data = action.payload;
         });
 
         builder.addCase(signUpUser.rejected, (state, action) => {
@@ -39,26 +54,15 @@ export const userSlice = createSlice({
             state.isLoading = false;
         });
 
-        builder.addCase(getUserData.pending, (state) => {
-            state.isLoadingUserData = true;
-        });
-
         builder.addCase(getUserData.fulfilled, (state, action) => {
-            state.isLoadingUserData = false;
-            state.currentUser = action.payload;
-        });
-
-        builder.addCase(getUserData.rejected, (state) => {
-            state.isLoadingUserData = false;
-        });
-
-        builder.addCase(logOut.fulfilled, (state) => {
-            state.currentUser = null;
-        });
+            state.servers = action.payload.serverData;
+            delete action.payload.serverData;
+            state.data = action.payload;
+        });        
     }
 })
 
-export const { setUser, noUserFound } = userSlice.actions;
+export const { setUser, noUserFound, addServerToArray, removeServer, updateNotes } = userSlice.actions;
 
 export const signUpUser = createAsyncThunk(
     "user/signUpUser",
@@ -68,6 +72,8 @@ export const signUpUser = createAsyncThunk(
             const credential = await signUpUserWithEmailAndPassword(formData);
             const serializedUser = {                
                 name: formData.firstName + " " + formData.lastName,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
                 username: formData.username,
                 email: formData.email,
                 uid: credential.user.uid
@@ -113,6 +119,5 @@ export const logOut = createAsyncThunk(
         }
     }
 )
-
 
 export default userSlice.reducer

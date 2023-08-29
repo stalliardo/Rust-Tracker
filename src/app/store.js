@@ -1,12 +1,13 @@
-import { combineReducers, configureStore } from '@reduxjs/toolkit'
-import gangInformationSlice from '../features/gangInfo/gangInformationSlice';
-// import userSlice from '../features/user/userSlice';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
+
+import alertsSlice from '../features/alerts/alertsSlice';
+import themeSlice from '../features/theme/themeSlice';
 import userSlice from '../features/user/userSlice';
 
 const combinedReducers = combineReducers({
   user: userSlice,
-  
-  // notification: notificationSlice,
+  theme: themeSlice,
+  alerts: alertsSlice
 })
 
 const rootReducer = (state, action) => {

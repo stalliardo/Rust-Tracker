@@ -25,5 +25,4 @@ yarn-error.log*
 # private
 private/
 
-#firebase
-src/firebase.js
+.env

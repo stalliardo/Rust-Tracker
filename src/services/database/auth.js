@@ -15,7 +15,9 @@ export const signUpUserWithEmailAndPassword = async (formData) => {
         const credential = await createUserWithEmailAndPassword(auth, email, password);
 
         await setDoc(doc(db, "users", credential.user.uid), {
-            name: firstName + " " + lastName,
+            fullName: firstName + " " + lastName,
+            firstName,
+            lastName,
             username
         });
 
@@ -40,11 +42,18 @@ export const getUserDoc = async (userId) => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-        return { ...docSnap.data(), id: userId };
-    } else {
+        const serversRef = collection(db, "users", userId, "servers");
+        const serverSnapshot = await getDocs(serversRef);
+        const serverData = [];
+
+        serverSnapshot.forEach((doc) => {
+            serverData.push({...doc.data(), id: doc.id});
+        });
+
+        return { ...docSnap.data(), id: userId, serverData };
     }
 }
 
-export const logUserOut = () => {
+export const logUserOut = async () => {
     return signOut(auth);
 }
