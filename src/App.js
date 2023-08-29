@@ -69,7 +69,6 @@ const App = () => {
     // TODO -> only run this if the user has alerts saved
     if (userDoc.data && userDoc.data.username === "Admin" && alerts.length) {
       const interval = setInterval(() => {
-        console.log('%cInvoking the refreshPlayerStatus function now...', "color: yellow;");
 
         // checkForPlayerStatusUpdate(userDoc.data.id).then((response) => {
         //   console.log("response = ", response);

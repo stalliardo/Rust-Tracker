@@ -7,8 +7,8 @@ const WelcomeDisplay = () => {
         // TODO
         <Box sx={{mb: "40px"}}>
             <Typography variant="h4" color="primary">Welcome to rust tracker. </Typography>
-            <Typography>Display some text here about the what the site does. Only Display if the user is not logged in.</Typography>
-            <Typography>Add a disclaimer about the instability of the battlemetrics API and this may result in unexpected behaviour</Typography>
+            <Typography>Stalk your in-game enemies using the power of the battlemetrics API.</Typography>
+            <Typography>Warning! The API is in an unstable state. Some features might be buggy.</Typography>
         </Box>
     )
 }

@@ -55,8 +55,6 @@ const RegisteredUserActions = ({ serverData }) => {
         if (isAuthenticated) {
             // Create server alerts
 
-            console.log("calling the refreshPLayerSttaus function....\n");
-
             // test calling the refreshPlayerStatus function on the backend
             // TODO remove...
             checkForPlayerStatusUpdate().then((response) => {

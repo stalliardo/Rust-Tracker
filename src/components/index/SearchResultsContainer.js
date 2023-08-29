@@ -27,7 +27,6 @@ const SearchResultsContainer = ({ searchResults }) => {
     
     useEffect(() => {
         const filteredResults = searchResults.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
-        console.log("filtered results = ", filteredResults);
         
         filteredResults.forEach((result) => {
             formattedData.push({
